@@ -1,6 +1,29 @@
 lower_limit = [2000,   0,  0,    0,   0,  25,  50,  5000,    50,  800, 10]
 upper_limit = [2250, 300, 65, 2400, 300, 100, 100, 50000, 20000, 1600, 30]
 
+foods = [
+            "Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn",
+            "Lettuce, Iceberg, Raw", "Peppers, Sweet, Raw", "Potatoes, Baked",
+            "Tofu", "Roasted Chicken", "Spaghetti W/ Sauce",
+            "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes",
+            "Kiwifruit, Raw, Fresh", "Oranges", "Bagels", "Wheat Bread",
+            "White Bread", "Oatmeal Cookies", "Apple Pie",
+            "Chocolate Chip Cookies", "Butter, Regular", "Cheddar Cheese",
+            "3.3'%' Fat, Whole Milk", "2'%' Lowfat Milk", "Skim Milk",
+            "Poached Eggs", "Scrambled Eggs", "Bologna, Turkey",
+            "Frankfurter, Beef", "Ham, Sliced, Extralean", "Kielbasa, Prk",
+            "Cap'N Crunch", "Cheerios", "Corn Flks, Kellog'S",
+            "Raisin Brn, Kellg'S", "Rice Krispies", "Special K", "Oatmeal",
+            "Malt-O-Meal, Choc", "Pizza W/ Pepperoni", "Taco",
+            "Hamburger W/ Toppings", "Hotdog, Plain", "Couscous",
+            "White Rice", "Macaroni, Ckd", "Peanut Butter", "Pork",
+            "Sardines in Oil", "White Tuna in Water", "Popcorn, Air-Popped",
+            "Potato Chips, Bbqflvr", "Tortilla Chip", "Chicknoodl Soup",
+            "Splt Pea&Hamsoup", "Vegetbeef Soup", "Neweng Clamchwd",
+            "Tomato Soup", "New E Clamchwd, W/ Mlk", "Crm Mshrm Soup, W/ Mlk",
+            "Beanbacn Soap, W/ Watr"
+]
+
 food_data = {    
     "Frozen Broccoli": [73.8, 0, 0.8, 68.2, 13.6, 8.5, 8, 5867.4, 160.2, 159, 2.3],
     "Carrots Raw": [23.7, 0, 0.1, 19.2, 5.6, 1.6, 0.6, 15471, 5.1, 14.9, 0.3],

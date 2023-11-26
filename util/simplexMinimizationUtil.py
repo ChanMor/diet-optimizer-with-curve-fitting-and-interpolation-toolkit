@@ -91,6 +91,12 @@ def generate_constraints_equations(foods):
 
     return function_equations
 
+def get_variables(foods):
+    variables = []
+    for i in range(len(foods)):
+        variables.append(f"x{i+1}")
+    return variables
+
 def generate_system_equations(constraints_equations):
     system = []
     for i, eq in enumerate(constraints_equations, start=0):
@@ -101,7 +107,7 @@ def generate_system_equations(constraints_equations):
     return system
 
 def format_matrix(matrix, variables):
-    column_names = variables
+    column_names = variables.copy()
     column_names.extend(["RHS"])
     df = pd.DataFrame(matrix, columns= column_names)
     df.index += 1
@@ -109,15 +115,17 @@ def format_matrix(matrix, variables):
 
 def format_solution(solution, variables):
     column_names = variables
-    df = pd.DataFrame([solution], columns= column_names)
+    df = pd.DataFrame([solution], columns=column_names)
     df.index += 1 
     print(df)
 
 selected_foods = ["Frozen Broccoli", "Carrots Raw", "Tofu", "Tomato Soup"]
 function_equations = generate_constraints_equations(selected_foods)
-
 system = generate_system_equations(function_equations)
-format_matrix(simplex_method(["x1", "x2", "x3", "x4"], system), ["x1", "x2", "x3", "x4"])
-format_solution(get_solution(simplex_method(["x1", "x2", "x3", "x4"], system)), ["x1", "x2", "x3", "x4"])
+variables = get_variables(selected_foods)
+simplex_matrix = simplex_method(variables, system)
+
+format_matrix(simplex_matrix, variables)
+format_solution(get_solution(simplex_matrix), variables)
 
 

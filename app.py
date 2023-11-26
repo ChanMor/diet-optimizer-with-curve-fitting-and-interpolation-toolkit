@@ -1,5 +1,6 @@
 from tkinter import *
 from solvers.genericSolver import GenericSolverPage
+from solvers.dietSolver import DietSolverPage
 
 import ttkbootstrap as ttk
 
@@ -15,6 +16,8 @@ class App:
         self.main_frame = self.create_main_page()
         self.generic_solver_frame = GenericSolverPage(root, self.send_to, self.main_frame)
 
+        self.diet_solver_frame = DietSolverPage(root, self.send_to, self.main_frame)
+
         self.send_to(self.main_frame)
     
     def create_main_page(self):
@@ -25,13 +28,16 @@ class App:
         generic_solver_btn = ttk.Button(main_frame, text="Generic Solver", bootstyle="light-outline", command=lambda: self.send_to(self.generic_solver_frame))
         generic_solver_btn.pack(pady=20)
 
+        diet_solver_btn = ttk.Button(main_frame, text="Diet Solver", bootstyle="light-outline", command=lambda: self.send_to(self.diet_solver_frame))
+        diet_solver_btn.pack(pady=20)
+
         mode_toggle_btn = ttk.Button(main_frame, text="Toggle Mode", style="light-outline", command=self.toggle_mode)
         mode_toggle_btn.pack(pady=20)
 
         return main_frame
     
     def send_to(self, page_to_show):
-        for frame in [self.main_frame, self.generic_solver_frame]:
+        for frame in [self.main_frame, self.generic_solver_frame, self.diet_solver_frame]:
             if frame == page_to_show:
                 page_to_show.pack()
             else:

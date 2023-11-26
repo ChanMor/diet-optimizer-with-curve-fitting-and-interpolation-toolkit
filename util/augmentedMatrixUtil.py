@@ -30,7 +30,6 @@ def get_augmented_coefficient_matrix(variables, system):
     num_of_columns = len(var)
     coefficients = get_coefficients(variables, system)
     RHS = get_right_hand_side(system)
-
     matrix = np.array(coefficients).reshape(-1, num_of_columns, order="F")
     matrix = np.column_stack((matrix, RHS))
     
