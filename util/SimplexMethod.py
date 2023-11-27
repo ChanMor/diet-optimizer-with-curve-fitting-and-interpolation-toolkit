@@ -18,6 +18,7 @@ def get_test_ratio(array, solution_column):
     return test_ratio
 
 def find_pivot_row_index(array, solution_column):
+    print(solution_column)
     test_ratio = get_test_ratio(array, solution_column)
     min_positive_index = np.where(test_ratio == np.min(test_ratio[test_ratio > 0]))[0]
     return min_positive_index[0]
@@ -70,8 +71,9 @@ def preprocessing_pivot_column(array):
         index += 1
 
 def preprocessing(matrix):
-    last_column = matrix[:-2,-1]
+    last_column = matrix[:-1,-1]
     while has_negative(last_column):
+
         pivot_row_index = preprocessing_pivot_row(last_column)
         pivot_column_determinant = matrix[pivot_row_index, :]
 
@@ -86,7 +88,7 @@ def preprocessing(matrix):
                 continue
             normalized_row = matrix[i, pivot_column_index]*matrix[pivot_row_index,:]
             matrix[i,:] -= normalized_row
-        last_column = matrix[:-2,-1]
+        last_column = matrix[:-1,-1]
         
     return matrix
 
@@ -95,10 +97,10 @@ def simplex_method(constraints):
     matrix = np.copy(constraints)
     matrix = preprocessing(matrix)
 
-    last_row = matrix[-1,:-2]
-
+    last_row = matrix[-1,:-1]
     while has_negative(last_row):
-        last_row = matrix[-1,:-2]
+        last_row = matrix[-1,:-1]
+
         solution_column = matrix[:,-1]
 
         pivot_column_index = find_pivot_column(last_row)
