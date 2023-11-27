@@ -71,3 +71,4 @@ class DietSolverPage(ttk.Frame):
                 checkbox_frame.pack(side="left", padx=5, pady=5)
 
         self.selected_foods.clear()
+        

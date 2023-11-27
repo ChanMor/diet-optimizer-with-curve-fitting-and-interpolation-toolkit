@@ -1,84 +1,9 @@
 import numpy as np
 import pandas as pd
-import augmentedMatrixUtil as am
-from foodDataUtil import food_data, upper_limit, lower_limit
+from foodDataUtil import food_data, upper_limit, lower_limit, food_cost
+import SimplexMethod as sm
 
-def find_pivot_column(array):
-    negative_indices = np.where(array < 0)[0]
-    if negative_indices.size > 0:
-        pivot_col = negative_indices[np.argmax(np.abs(array[negative_indices]))]
-        return pivot_col
-    return None
-
-def get_test_ratio(array, solution_column):
-    test_ratio = np.empty(len(array))
-    for i in range(len(array)):
-        if array[i] == 0:
-            test_ratio[i] = None
-        else:
-            test_ratio[i] = solution_column[i]/array[i]
-    return test_ratio
-
-def find_pivot_row_index(array, solution_column):
-    test_ratio = get_test_ratio(array, solution_column)
-    min_positive_index = np.where(test_ratio == np.min(test_ratio[test_ratio > 0]))[0]
-    return min_positive_index[0]
-
-def find_identity(array):
-    if 1 in array:
-        instance_of_1 = np.where(array == 1)[0]
-        if instance_of_1.size == 1:
-            return instance_of_1.item()
-        return instance_of_1[0].item()
-    return None
-    
-def is_identity(array, index):
-    for i in range(len(array)):
-        if i == index:
-            continue
-        if array[i] != 0:
-            return False
-    return True
-
-def get_solution(matrix):
-    num_variables = matrix.shape[1] - 1
-    solution = np.empty(num_variables)
-    for i in range(num_variables):
-        solution_index = find_identity(matrix[:, i])        
-        if solution_index is not None and is_identity(matrix[:, i], solution_index):
-            solution[i] = matrix[solution_index, -1]
-        else:
-            solution[i] = 0
-    return solution
-
-
-def simplex_method(variables, constraints):
-    matrix = am.get_augmented_coefficient_matrix(variables, constraints)
-
-    iteration_count = 0
-    while iteration_count < 1000:
-        last_row = matrix[-1,:]
-        solution_column = matrix[:,-1]
-
-        pivot_column_index = find_pivot_column(last_row)
-        if pivot_column_index == None:
-            break
-        
-        pivot_column = matrix[:, pivot_column_index]
-        pivot_row_index = find_pivot_row_index(pivot_column, solution_column)
-        matrix[pivot_row_index,:] /= matrix[pivot_row_index, pivot_column_index]
-
-        number_of_rows = matrix.shape[0]
-        for i in range(number_of_rows):
-            if i == pivot_row_index:
-                continue
-            normalized_row = matrix[i, pivot_column_index]*matrix[pivot_row_index,:]
-            matrix[i,:] -= normalized_row
-        iteration_count += 1
-
-    return matrix
-
-def generate_constraints_equations(foods):
+def generate_maximum_constraints_equations(foods):
     function_equations = []
     for i in range(11): 
         equation = ""
@@ -91,41 +16,109 @@ def generate_constraints_equations(foods):
 
     return function_equations
 
+def generate_manimum_constraints_equations(foods):
+    function_equations = []
+    for i in range(11): 
+        equation = ""
+        for j, food in enumerate(foods, start=1):
+            if j == 1:
+                equation += f"-{food_data[food][i]} * x{j}"
+            else:
+                equation += f" + -{food_data[food][i]} * x{j}"
+        function_equations.append(equation.strip())
+
+    return function_equations
+
 def get_variables(foods):
     variables = []
     for i in range(len(foods)):
         variables.append(f"x{i+1}")
+
+    for i in range(22):
+        variables.append(f"s{i+1}")
+    variables.append("z")
     return variables
 
 def generate_system_equations(constraints_equations):
+    maximum_constraints = constraints_equations[:11]
+    manimum_constraints = constraints_equations[11:]
+    
     system = []
-    for i, eq in enumerate(constraints_equations, start=0):
+    for i, eq in enumerate(maximum_constraints, start=0):
         upper_eq = f"{eq} + -{upper_limit[i]}"
-        lower_eq = f"{eq} + -{lower_limit[i]}"
-        system.append(lower_eq)
         system.append(upper_eq)
+    for j, eq in enumerate(manimum_constraints, start=0):
+        lower_eq = f"{eq} + {lower_limit[j]}"
+        system.append(lower_eq)
+
     return system
 
 def format_matrix(matrix, variables):
+
     column_names = variables.copy()
     column_names.extend(["RHS"])
     df = pd.DataFrame(matrix, columns= column_names)
-    df.index += 1
+    df.index = ["Calories", "Cholesterol", "Total Fat",
+                "Sodium", "Carbohydrates", "Dietary Fiber",
+                "Protein", "Vitamin A", "Vitamin C", 
+                "Calcium", "Iron", "Calories", "Cholesterol", "Total Fat",
+                "Sodium", "Carbohydrates", "Dietary Fiber",
+                "Protein", "Vitamin A", "Vitamin C", 
+                "Calcium", "Iron", "objective"]
+    pd.set_option('display.float_format', '{:.2f}'.format)
     print(df)
 
-def format_solution(solution, variables):
-    column_names = variables
-    df = pd.DataFrame([solution], columns=column_names)
-    df.index += 1 
-    print(df)
+def generate_slack_variables(index):
+    slack_variables = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    slack_variables[index] = 1
+    return slack_variables
 
-selected_foods = ["Frozen Broccoli", "Carrots Raw", "Tofu", "Tomato Soup"]
-function_equations = generate_constraints_equations(selected_foods)
-system = generate_system_equations(function_equations)
+def generate_constraints_matrix(foods):
+    matrix_coefficients = []
+    for i in range(11):
+        upper_constraints_coefficients = []
+        for food in foods:
+            upper_constraints_coefficients.append(food_data[food][i])
+
+        upper_constraints_coefficients.extend(generate_slack_variables(i))
+        upper_constraints_coefficients.append(upper_limit[i])
+        matrix_coefficients.append(upper_constraints_coefficients)
+
+    for i in range(11):
+        lower_constraints_coefficients = []
+        for food in foods:
+            lower_constraints_coefficients.append(-1*food_data[food][i])
+
+        lower_constraints_coefficients.extend(generate_slack_variables(i+11))
+        lower_constraints_coefficients.append(-1*lower_limit[i])
+        matrix_coefficients.append(lower_constraints_coefficients)
+
+    return np.array(matrix_coefficients)
+
+
+def generate_objective_matrix(foods):
+    objective_coefficients = []
+    for food in foods:
+        objective_coefficients.append(food_cost[food])
+    objective_coefficients.extend(generate_slack_variables(22))
+    objective_coefficients.extend([0])
+    return np.array(objective_coefficients)
+
+
+
+selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn", "Lettuce, Iceberg, Raw", 
+                  "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
+                  "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
+                  "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
+
+
+constraints_matrix = generate_constraints_matrix(selected_foods)
+objective_matrix = generate_objective_matrix(selected_foods)
+extended_matrix = np.vstack((constraints_matrix, objective_matrix))
+
 variables = get_variables(selected_foods)
-simplex_matrix = simplex_method(variables, system)
-
+format_matrix(extended_matrix, variables)
+simplex_matrix = sm.simplex_method(extended_matrix)
 format_matrix(simplex_matrix, variables)
-format_solution(get_solution(simplex_matrix), variables)
-
-
+print(sm.get_solution(simplex_matrix))
+#format(sm.simplex_method(generate_constraints_matrix(selected_foods)), variables)

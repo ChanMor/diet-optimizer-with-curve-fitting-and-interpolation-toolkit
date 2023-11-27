@@ -1,8 +1,9 @@
 import numpy as np
 
 def get_right_hand_side(system):
+    list_of_equations = np.copy(system)
     right_hand_side = []
-    for eq in system:
+    for eq in list_of_equations:
         terms = eq.split("+")
         for term in terms:
             term_parts = term.split("*")
@@ -29,9 +30,9 @@ def get_augmented_coefficient_matrix(variables, system):
     var = variables
     num_of_columns = len(var)
     coefficients = get_coefficients(variables, system)
-    RHS = get_right_hand_side(system)
+    rhs = get_right_hand_side(system)
     matrix = np.array(coefficients).reshape(-1, num_of_columns, order="F")
-    matrix = np.column_stack((matrix, RHS))
+    matrix = np.column_stack((matrix, rhs))
     
     return matrix
 
