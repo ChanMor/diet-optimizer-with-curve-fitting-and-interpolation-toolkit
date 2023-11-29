@@ -1,4 +1,7 @@
 import numpy as np
+import pandas as pd
+import augmentedMatrixUtil as am
+
 np.set_printoptions(precision=2, suppress=True)
 
 def find_pivot_column(array):
@@ -18,7 +21,6 @@ def get_test_ratio(array, solution_column):
     return test_ratio
 
 def find_pivot_row_index(array, solution_column):
-    print(solution_column)
     test_ratio = get_test_ratio(array, solution_column)
     min_positive_index = np.where(test_ratio == np.min(test_ratio[test_ratio > 0]))[0]
     return min_positive_index[0]
@@ -93,8 +95,7 @@ def preprocessing(matrix):
     return matrix
 
 def simplex_method(constraints):
-    #matrix = am.get_augmented_coefficient_matrix(constraints)
-    matrix = np.copy(constraints)
+    matrix = am.generate_augmented_matrix(constraints)
     matrix = preprocessing(matrix)
 
     last_row = matrix[-1,:-1]
@@ -117,6 +118,27 @@ def simplex_method(constraints):
             matrix[i,:] -= normalized_row
 
     return matrix
+
+def format_matrix(matrix, variables):
+    column_names = variables.copy()
+    column_names.extend(["RHS"])
+    df = pd.DataFrame(matrix, columns= column_names)
+    df.index +=1
+    pd.set_option('display.float_format', '{:.2f}'.format)
+    print(df)
+
+
+
+selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn", "Lettuce, Iceberg, Raw", 
+                  "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
+                  "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
+                  "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
+
+variables = am.get_variables(selected_foods)
+simplex_matrix = simplex_method(selected_foods)
+format_matrix(simplex_matrix, variables)
+solution = get_solution(simplex_matrix)
+print(solution)
 
 # def E1(x1, x2, s1, s2, s3, z):
 #     return -1 * x1 + -1 * x2 + 1 * s1 + 0 * s2 + 0 * s3 + 0 * z + 20
@@ -148,3 +170,7 @@ def simplex_method(constraints):
 # print(get_solution(solution_matrix))
 
 
+selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn", "Lettuce, Iceberg, Raw", 
+                  "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
+                  "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
+                  "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
