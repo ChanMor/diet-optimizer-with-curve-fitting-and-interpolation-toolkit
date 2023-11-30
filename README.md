@@ -40,7 +40,7 @@ Since you cannot proceed with the simplex method while there is a negative in th
 Simplex Method:
 
 1. Choose the highest magnitude negative number in the last row and this will serve as the pivot column
-2. Get test ratio (last column / pivot column) and find the smallest non negative ratio, this will serve ad the pivot row
+2. Find the smallest non negative test ratio (last column / pivot column), this will serve ad the pivot row
 3. Eliminate all rows similar to how you perform gauss jordan
 4. Repeat until no negative exist in the last row
    
@@ -48,6 +48,7 @@ Reference:
 
 [Simplex Method with Mixed Constraints](https://www.youtube.com/watch?v=YJLsXf9fcvw&t=491s&pp=ygUtc2ltcGxleCBtZXRob2QgbWluaW1pemF0aW9uIG1peGVkIGNvbnN0cmFpbnRz) | 
 [Chapter 9 Linear Programming Mixed Constraints and Minimization](https://homepage.ntu.edu.tw/~jryanwang/courses/Mathematics%20for%20Management%20(undergraduate%20level)/Ch09_Text_Book.pdf?fbclid=IwAR2oCbAFUq9gh7AY2s9KcXbR975VVD1uAk5FZeYQyf1ovOXVRUtkKGTkTtw)
+
 ## Polynomial Regression
 
 ## Quadratic Spline Interpolation
@@ -74,7 +75,6 @@ source myenv/bin/activate
 ## Running the Program
 Use the cd command to navigate to the directory:
 ```bash
-bash
 cd path/to/your/script/directory
 ```
 Once you are in the correct directory, run your Python script using the python command followed by the script's filename. For example:
