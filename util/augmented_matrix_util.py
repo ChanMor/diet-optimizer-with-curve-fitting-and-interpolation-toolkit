@@ -1,5 +1,5 @@
 import numpy as np
-from food_data_util import food_data, upper_limit, lower_limit, food_cost
+from .food_data_util import food_data, upper_limit, lower_limit, food_cost
 
 def get_variables(foods):
     variables = []

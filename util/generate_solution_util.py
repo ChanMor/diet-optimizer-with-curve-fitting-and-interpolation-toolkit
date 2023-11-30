@@ -1,5 +1,5 @@
 import numpy as np
-import simplex__method_util as sm
+from .simplex_method_util import simplex_method
 
 def find_identity(array):
     if 1 in array:
@@ -27,7 +27,7 @@ def generate_solution_array(matrix):
     return solution
 
 def generate_dictionary(foods):
-    simplex_matrix = sm.simplex_method(foods)
+    simplex_matrix = simplex_method(foods)
     solution_array = generate_solution_array(simplex_matrix)
 
     rounded_solution_array = np.round(solution_array, decimals=2)
@@ -40,6 +40,6 @@ def generate_dictionary(foods):
 #                   "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
 #                   "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
 
-# selected_foods = ["Wheat Bread", "White Bread", "Frozen Broccoli", "Roasted Chicken", "Oatmeal Cookies", "Potatoes, Baked", "Tofu"]
+selected_foods = ["Wheat Bread", "White Bread", "Frozen Broccoli", "Roasted Chicken", "Oatmeal Cookies", "Potatoes, Baked", "Tofu"]
 
-# generate_dictionary(selected_foods)
+print(generate_dictionary(selected_foods))

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from ttkbootstrap import Style
 from util.food_data_util import foods
+from util.generate_solution_util import generate_dictionary
 
 class DietSolverPage(ttk.Frame):
     def __init__(self, root, send_to, main_frame):
@@ -52,6 +52,9 @@ class DietSolverPage(ttk.Frame):
 
     def select_foods(self):
         print("Selected Foods:", self.selected_foods)
+        if (self.select_foods != []):
+            solution_dictionary = generate_dictionary(self.selected_foods)
+        print(solution_dictionary)
 
     def clear_selection(self):
         for frame in self.checkbox_parent_frame.winfo_children():
