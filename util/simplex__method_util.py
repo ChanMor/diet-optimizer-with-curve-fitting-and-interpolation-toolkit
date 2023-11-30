@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-import augmentedMatrixUtil as am
-import preprocessingMatrixUtil as pm
+import augmented_matrix_util as am
+import preprocessing_matrix_util as pm
 
 np.set_printoptions(precision=2, suppress=True)
 
@@ -29,7 +29,7 @@ def find_pivot_row_index(array, solution_column):
 def simplex_method(constraints):
     matrix = am.generate_augmented_matrix(constraints)
     matrix = pm.preprocessing(matrix)
-
+    print(matrix[-1,:])
     last_row = matrix[-1,:-1]
     while pm.has_negative(last_row):
         last_row = matrix[-1,:-1]

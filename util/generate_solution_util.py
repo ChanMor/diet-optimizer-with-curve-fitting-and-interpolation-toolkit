@@ -1,6 +1,6 @@
 import numpy as np
-import augmentedMatrixUtil as am
-import SimplexMethodUtil as sm
+import augmented_matrix_util as am
+import simplex__method_util as sm
 
 def find_identity(array):
     if 1 in array:
@@ -31,6 +31,8 @@ selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn",
                   "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
                   "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
                   "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
+
+selected_foods = ["Wheat Bread", "White Bread", "Frozen Broccoli", "Roasted Chicken", "Oatmeal Cookies", "Potatoes, Baked", "Tofu"]
 
 variables = am.get_variables(selected_foods)
 simplex_matrix = sm.simplex_method(selected_foods)

@@ -1,5 +1,5 @@
 import numpy as np
-from foodDataUtil import food_data, upper_limit, lower_limit, food_cost
+from food_data_util import food_data, upper_limit, lower_limit, food_cost
 
 def get_variables(foods):
     variables = []
@@ -81,17 +81,4 @@ def generate_augmented_matrix(foods):
     
     return np.vstack((constraints_matrix, objective_matrix))
 
-
-
-
-
-# matrix = np.array([[-1.0, -2.0, 1.0, 0.0, 0.0, -4.0],
-#                    [-7.0, -6.0, 0.0, 1.0, 0.0, -20.0],
-#                    [14.0, 20.0, 0.0, 0.0, 1.0, 0.0]])
-# print(sm.simplex_method(matrix))
-
-# matrix = np.array([[ 2.0,   3.0,  4.0, 1.0, 0.0, 0.0, 0.0,  14.0],
-#                    [-3.0,  -1.0, -5.0, 0.0, 1.0, 0.0, 0.0,  -4.0],
-#                    [-1.0 , -4.0, -3.0, 0.0, 0.0, 1.0, 0.0,  -6.0],
-#                    [ 4.0,   2.0,  1.0, 0.0, 0.0, 0.0, 1.0,  0.0]])
-# print(sm.simplex_method(matrix))
+    
