@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 import ttkbootstrap as ttk
-from util.polynomialRegressionUtil import *
+from util.polynomial_regression_util import *
 
 class PolynomialRegressionPage(ttk.Frame):
     def __init__(self, root, send_to, generic_solver):

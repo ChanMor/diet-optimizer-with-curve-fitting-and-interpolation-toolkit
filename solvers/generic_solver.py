@@ -1,7 +1,7 @@
 from tkinter import *
 import ttkbootstrap as ttk
-from .polynomialRegression import PolynomialRegressionPage 
-from .quadraticSplineInterpolation import QuadraticSplineInterpolationPage
+from .polynomial_regression import PolynomialRegressionPage 
+from .quadratic_spline_interpolation import QuadraticSplineInterpolationPage
 
 class GenericSolverPage(ttk.Frame):
     def __init__(self, root, send_to, main_frame):

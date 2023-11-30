@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from ttkbootstrap import Style
-from util.foodDataUtil import foods
+from util.food_data_util import foods
 
 class DietSolverPage(ttk.Frame):
     def __init__(self, root, send_to, main_frame):

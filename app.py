@@ -1,6 +1,6 @@
 from tkinter import *
-from solvers.genericSolver import GenericSolverPage
-from solvers.dietSolver import DietSolverPage
+from solvers.generic_solver import GenericSolverPage
+from solvers.diet_solver import DietSolverPage
 
 import ttkbootstrap as ttk
 
