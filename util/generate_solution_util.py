@@ -1,5 +1,4 @@
 import numpy as np
-import augmented_matrix_util as am
 import simplex__method_util as sm
 
 def find_identity(array):
@@ -27,14 +26,20 @@ def generate_solution_array(matrix):
             solution[i] = 0
     return solution
 
-selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn", "Lettuce, Iceberg, Raw", 
-                  "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
-                  "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
-                  "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
+def generate_dictionary(foods):
+    simplex_matrix = sm.simplex_method(foods)
+    solution_array = generate_solution_array(simplex_matrix)
 
-selected_foods = ["Wheat Bread", "White Bread", "Frozen Broccoli", "Roasted Chicken", "Oatmeal Cookies", "Potatoes, Baked", "Tofu"]
+    rounded_solution_array = np.round(solution_array, decimals=2)
+    food_dict = dict(zip(foods, rounded_solution_array))
+    
+    return food_dict
 
-variables = am.get_variables(selected_foods)
-simplex_matrix = sm.simplex_method(selected_foods)
-sm.format_matrix(simplex_matrix, variables)
-print(generate_solution_array(simplex_matrix))
+# selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn", "Lettuce, Iceberg, Raw", 
+#                   "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
+#                   "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
+#                   "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
+
+# selected_foods = ["Wheat Bread", "White Bread", "Frozen Broccoli", "Roasted Chicken", "Oatmeal Cookies", "Potatoes, Baked", "Tofu"]
+
+# generate_dictionary(selected_foods)

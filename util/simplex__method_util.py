@@ -3,8 +3,6 @@ import pandas as pd
 import augmented_matrix_util as am
 import preprocessing_matrix_util as pm
 
-np.set_printoptions(precision=2, suppress=True)
-
 def find_pivot_column(array):
     negative_indices = np.where(array < 0)[0]
     if negative_indices.size > 0:
@@ -29,7 +27,6 @@ def find_pivot_row_index(array, solution_column):
 def simplex_method(constraints):
     matrix = am.generate_augmented_matrix(constraints)
     matrix = pm.preprocessing(matrix)
-    print(matrix[-1,:])
     last_row = matrix[-1,:-1]
     while pm.has_negative(last_row):
         last_row = matrix[-1,:-1]

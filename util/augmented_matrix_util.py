@@ -13,8 +13,7 @@ def get_variables(foods):
 
 def generate_slack_variables(index, foods):
     slack_variables = []
-    for i in range(22 + len(foods) + 1):
-        slack_variables.append(0)
+    slack_variables = [0 for _ in range(22 + len(foods) + 1)]
     slack_variables[index] = 1
     return slack_variables
 
