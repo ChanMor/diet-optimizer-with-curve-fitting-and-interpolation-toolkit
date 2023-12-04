@@ -38,15 +38,14 @@ def generate_dictionary(foods):
     if simplex_matrix is None:
         return None
 
-    solution_array = simplex_matrix[-1,:]
-
-    rounded_solution_array = np.round(solution_array, decimals=2)
+    solution_array = simplex_matrix[-1,:-2]
+    solution_array = np.append(solution_array, simplex_matrix[-1, -1:])
 
     solution_dictionary_keys = generate_slack_variables(simplex_matrix, foods)
     solution_dictionary_keys.extend(foods)
-    print(solution_dictionary_keys)
+    solution_dictionary_keys.append("Total Cost")
 
-    solution_dictionary = dict(zip(solution_dictionary_keys, rounded_solution_array))
+    solution_dictionary = dict(zip(solution_dictionary_keys, solution_array))
     
     return solution_dictionary
 

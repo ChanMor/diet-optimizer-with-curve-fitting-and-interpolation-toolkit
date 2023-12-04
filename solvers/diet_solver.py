@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from util.food_data_util import foods
+from util.food_data_util import foods, food_cost
 from util.generate_solution_util import generate_dictionary
+import math
 
 class DietSolverPage(ttk.Frame):
     def __init__(self, root, send_to, main_frame):
@@ -11,22 +12,26 @@ class DietSolverPage(ttk.Frame):
         self.main_frame = main_frame
 
         self.foods = foods
+        self.food_cost = food_cost
         self.selected_foods = []
 
         self.generate_labels()
 
         self.checkbox_parent_frame = ttk.Frame(self)
-        self.checkbox_parent_frame.pack(pady=20)
+        self.checkbox_parent_frame.pack(pady=10)
 
         self.button_frame = ttk.Frame(self)
-        self.button_frame.pack(pady=5, fill="x")
+        self.button_frame.pack(pady=10, fill="x")
 
         self.generate_food_checkbox()
         self.generate_buttons()
 
+        self.table_frame = ttk.Frame(self)
+        self.table_frame.pack(pady=10)
+
     def generate_labels(self):
         diet_solver_label = ttk.Label(self, text="Diet Solver", font=("Arial", 28), bootstyle="default")
-        diet_solver_label.pack(pady=50)
+        diet_solver_label.pack(pady=20)
 
     def generate_buttons(self):
         back_btn = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to(self.main_frame))
@@ -66,6 +71,10 @@ class DietSolverPage(ttk.Frame):
     def generate(self):
         print("Selected Foods:", self.selected_foods)
 
+        for table in self.table_frame.winfo_children():
+            if isinstance(table, ttk.Treeview):
+                table.destroy()
+
         solution_dictionary = None
         if (self.selected_foods != []):
             solution_dictionary = generate_dictionary(self.selected_foods)
@@ -89,17 +98,30 @@ class DietSolverPage(ttk.Frame):
                 self.selected_state(frame)
                 
         self.complete_food_selection()
-        #self.generate()
 
     def display_foods(self, food_dictionary):
 
         if food_dictionary is None:
             return None
 
-        table = ttk.Treeview(self, columns=("Foods", "Serving", "Cost"), show="headings")
-        for keys, values in food_dictionary.items():
-            table.heading("Foods", text=keys)
-        table.pack()
+        table = ttk.Treeview(self.table_frame, columns=("Foods", "Serving", "Cost"), show="headings")
+        table.heading("Foods", text="Foods")
+        table.heading("Serving", text="Serving")
+        table.heading("Cost", text="Cost")
+        table.pack(pady=10)
+
+        for i, (food, serving) in enumerate(food_dictionary.items()):
+            if serving == 0:
+                continue
+            
+            if food == "Total Cost":
+                table.insert(parent="", index=i, values=("Total Cost", "", format(serving, ".2f")))
+                continue
+
+            if not (len(food) == 2 or len(food) == 3):
+                data = (food, format(serving, ".2f"), format(serving*self.food_cost[food], ".2f"))
+                table.insert(parent="", index=i, values=data)
+
 
     def clear_selection(self):
         for frame in self.checkbox_parent_frame.winfo_children():

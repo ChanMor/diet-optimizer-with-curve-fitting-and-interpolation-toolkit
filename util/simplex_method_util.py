@@ -85,16 +85,5 @@ def simplex_method(constraints):
 
         iteration_count += 1
 
-    df = pd.DataFrame(matrix)
-    df.to_csv('file.csv',index=False)
-
-    print(f"Simplex Iteration: {iteration_count}")  
     return matrix
 
-def format_matrix(matrix, variables):
-    column_names = variables.copy()
-    column_names.extend(["RHS"])
-    df = pd.DataFrame(matrix, columns= column_names)
-    df.index +=1
-    pd.set_option('display.float_format', '{:.2f}'.format)
-    print(df)
