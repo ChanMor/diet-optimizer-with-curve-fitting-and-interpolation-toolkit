@@ -16,30 +16,37 @@ def is_identity(array, index):
     return True
 
 def generate_solution_array(matrix):
-    num_variables = matrix.shape[1] - 1
-    solution = np.empty(num_variables)
-    for i in range(num_variables):
-        solution_index = find_identity(matrix[:, i])        
-        if solution_index is not None and is_identity(matrix[:, i], solution_index):
-            solution[i] = matrix[solution_index, -1]
-        else:
-            solution[i] = 0
-    return solution
+
+    return matrix[-1,:]
+
+def generate_slack_variables(matrix, foods):
+    num_of_foods = len(foods)
+    num_of_slack_variables = matrix.shape[1] - num_of_foods - 2
+    slack_variables = []
+    for i in range(num_of_slack_variables):
+        slack_variables.append(f"s{i+1}")
+    
+    return slack_variables
 
 def generate_dictionary(foods):
-
     if foods == []:
         print("System: No Food Selected!")
         return None
 
     simplex_matrix = simplex_method(foods)
 
-    if simplex_matrix == None:
+    if simplex_matrix is None:
         return None
 
-    solution_array = generate_solution_array(simplex_matrix)
+    solution_array = simplex_matrix[-1,:]
 
     rounded_solution_array = np.round(solution_array, decimals=2)
-    food_dict = dict(zip(foods, rounded_solution_array))
+
+    solution_dictionary_keys = generate_slack_variables(simplex_matrix, foods)
+    solution_dictionary_keys.extend(foods)
+    print(solution_dictionary_keys)
+
+    solution_dictionary = dict(zip(solution_dictionary_keys, rounded_solution_array))
     
-    return food_dict
+    return solution_dictionary
+

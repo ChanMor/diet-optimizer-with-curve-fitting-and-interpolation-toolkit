@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from .augmented_matrix_util import generate_augmented_matrix
+import augmented_matrix_util as am
 
 def has_negative(array):
     for coefficient in array:
@@ -36,7 +36,9 @@ def find_pivot_row_index(array, solution_column):
     return min_positive_index[0]
 
 def simplex_method(constraints):
-    matrix = generate_augmented_matrix(constraints)
+    print(constraints)
+
+    matrix = am.generate_augmented_matrix(constraints)
 
     #transpose augmented matrix
     matrix = matrix.transpose()
@@ -51,8 +53,11 @@ def simplex_method(constraints):
     #append identity matrix just before the last row
     matrix = np.insert(matrix, -1, identity_matrix, axis=1)
 
+
+
     iteration_count = 0
     last_row = matrix[-1,:-1]
+
     while has_negative(last_row):
 
         if iteration_count == 1000:
@@ -84,11 +89,7 @@ def simplex_method(constraints):
             matrix[i,:] -= normalized_row
 
         iteration_count += 1
-
-    df = pd.DataFrame(matrix)
-    df.to_csv('file.csv',index=False)
-
-    print(f"Simplex Iteration: {iteration_count}")  
+    
     return matrix
 
 def format_matrix(matrix, variables):

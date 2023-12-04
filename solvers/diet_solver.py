@@ -13,13 +13,14 @@ class DietSolverPage(ttk.Frame):
         self.foods = foods
         self.selected_foods = []
 
+        self.generate_labels()
+
         self.checkbox_parent_frame = ttk.Frame(self)
         self.checkbox_parent_frame.pack(pady=20)
 
         self.button_frame = ttk.Frame(self)
         self.button_frame.pack(pady=5, fill="x")
 
-        self.generate_labels()
         self.generate_food_checkbox()
         self.generate_buttons()
 
@@ -31,7 +32,7 @@ class DietSolverPage(ttk.Frame):
         back_btn = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to(self.main_frame))
         back_btn.pack(side="left", anchor="w")
 
-        select_button = ttk.Button(self.button_frame, text="Select", bootstyle="primary", command=self.select_foods)
+        select_button = ttk.Button(self.button_frame, text="Generate", bootstyle="primary", command=self.generate)
         select_button.pack(side="left", padx=10, anchor="w")
 
         select_all_button = ttk.Button(self.button_frame, text="Select All", bootstyle="primary", command=self.select_all_foods)
@@ -47,13 +48,12 @@ class DietSolverPage(ttk.Frame):
         for i, food in enumerate(self.foods):
 
             checkbox_var = tk.BooleanVar(value=False)
-            food_checkbox = ttk.Checkbutton(checkbox_frame, text=food, variable=checkbox_var, onvalue=True, offvalue=False, command=lambda f=food, var=checkbox_var: self.toggle_selection(food, var))
+            food_checkbox = ttk.Checkbutton(checkbox_frame, text=food, variable=checkbox_var, onvalue=True, offvalue=False, command=lambda f=food, var=checkbox_var: self.toggle_selection(f, var))
             food_checkbox.pack(side="top", pady=5, anchor="w")
 
             if (i + 1) % 9 == 0:
                 checkbox_frame = ttk.Frame(self.checkbox_parent_frame)
                 checkbox_frame.pack(side="left", padx=5, pady=5)
-
 
     def toggle_selection(self, food, checkbox_var):
         selected = checkbox_var.get()
@@ -63,30 +63,37 @@ class DietSolverPage(ttk.Frame):
         else:
             self.selected_foods.remove(food)
 
-    def select_foods(self):
+    def generate(self):
         print("Selected Foods:", self.selected_foods)
 
-        if (self.select_foods != []):
+        solution_dictionary = None
+        if (self.selected_foods != []):
             solution_dictionary = generate_dictionary(self.selected_foods)
 
         self.display_foods(solution_dictionary)
-
         print("Optimal Food Serving:", solution_dictionary)
+
+    def complete_food_selection(self):
+        self.selected_foods.clear()
+        for food in self.foods:
+            self.selected_foods.append(food)
+
+    def selected_state(self, frame):
+        for checkbox in frame.winfo_children():
+            if isinstance(checkbox, ttk.Checkbutton):
+                checkbox.state(['selected'])
 
     def select_all_foods(self):
         for frame in self.checkbox_parent_frame.winfo_children():
             if isinstance(frame, ttk.Frame):
-                for checkbox in frame.winfo_children():
-                    if isinstance(checkbox, ttk.Checkbutton):
-                        self.toggle_selection(checkbox.cget("text"), checkbox.cget("variable").set(False))
-                        checkbox.state(['selected'])
-
-
-        print("Selected Foods:", self.selected_foods)
+                self.selected_state(frame)
+                
+        self.complete_food_selection()
+        #self.generate()
 
     def display_foods(self, food_dictionary):
 
-        if food_dictionary == None:
+        if food_dictionary is None:
             return None
 
         table = ttk.Treeview(self, columns=("Foods", "Serving", "Cost"), show="headings")
