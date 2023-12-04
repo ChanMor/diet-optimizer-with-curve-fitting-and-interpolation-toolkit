@@ -87,7 +87,7 @@ food_cost = {
     "Tomato Soup": 0.39,
     "New E Clamchwd, W/ Mlk": 0.99,
     "Crm Mshrm Soup, W/ Mlk": 0.65,
-    "Beanbacn Soap, W/Watr": 0.67
+    "Beanbacn Soap, W/ Watr": 0.67
 }
 
 food_data = {    

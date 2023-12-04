@@ -19,6 +19,8 @@ def preprocessing_pivot_column(array):
         index += 1
 
 def preprocessing(matrix):
+
+    iteration_count = 0
     last_column = matrix[:-1,-1]
     while has_negative(last_column):
 
@@ -36,6 +38,9 @@ def preprocessing(matrix):
                 continue
             normalized_row = matrix[i, pivot_column_index]*matrix[pivot_row_index,:]
             matrix[i,:] -= normalized_row
+            
         last_column = matrix[:-1,-1]
-        
+        iteration_count += 1
+    
+    print(f"Preprocessing Iteration: {iteration_count}")
     return matrix

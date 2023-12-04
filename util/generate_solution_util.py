@@ -27,19 +27,19 @@ def generate_solution_array(matrix):
     return solution
 
 def generate_dictionary(foods):
+
+    if foods == []:
+        print("System: No Food Selected!")
+        return None
+
     simplex_matrix = simplex_method(foods)
+
+    if simplex_matrix == None:
+        return None
+
     solution_array = generate_solution_array(simplex_matrix)
 
     rounded_solution_array = np.round(solution_array, decimals=2)
     food_dict = dict(zip(foods, rounded_solution_array))
     
     return food_dict
-
-# selected_foods = ["Frozen Broccoli", "Carrots Raw", "Celery Raw", "Frozen Corn", "Lettuce, Iceberg, Raw", 
-#                   "Roasted Chicken", "Potatoes, Baked", "Tofu", "Peppers, Sweet, Raw", "Spaghetti W/ Sauce", 
-#                   "Tomato, Red, Ripe, Raw", "Apple, Raw, W/ Skin", "Banana", "Grapes", "Kiwifruit, Raw, Fresh", 
-#                   "Oranges", "Bagels", "Wheat Bread", "White Bread", "Oatmeal Cookies"]
-
-selected_foods = ["Wheat Bread", "White Bread", "Frozen Broccoli", "Roasted Chicken", "Oatmeal Cookies", "Potatoes, Baked", "Tofu"]
-
-print(generate_dictionary(selected_foods))

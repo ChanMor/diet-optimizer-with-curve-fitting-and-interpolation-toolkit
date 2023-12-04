@@ -21,14 +21,28 @@ def get_test_ratio(array, solution_column):
 
 def find_pivot_row_index(array, solution_column):
     test_ratio = get_test_ratio(array, solution_column)
-    min_positive_index = np.where(test_ratio == np.min(test_ratio[test_ratio > 0]))[0]
+
+    try:
+        min_positive_value = np.min(test_ratio[test_ratio > 0])
+    except Exception as e:
+        return None
+
+    min_positive_index = np.where(test_ratio == min_positive_value)[0]
     return min_positive_index[0]
 
 def simplex_method(constraints):
     matrix = generate_augmented_matrix(constraints)
     matrix = preprocessing(matrix)
+
+    iteration_count = 0
     last_row = matrix[-1,:-1]
     while has_negative(last_row):
+
+        if iteration_count == 1000:
+            print(f"Simplex Iteration: {iteration_count}")  
+            print("System: No Feasible Solution!")
+            return None
+
         last_row = matrix[-1,:-1]
 
         solution_column = matrix[:,-1]
@@ -37,6 +51,12 @@ def simplex_method(constraints):
         pivot_column = matrix[:, pivot_column_index]
     
         pivot_row_index = find_pivot_row_index(pivot_column, solution_column)
+
+        if pivot_row_index == None:
+            print(f"Simplex Iteration: {iteration_count}")  
+            print("System: No Feasible Solution!")
+            return None
+
         matrix[pivot_row_index,:] /= matrix[pivot_row_index, pivot_column_index]
 
         number_of_rows = matrix.shape[0]
@@ -46,6 +66,9 @@ def simplex_method(constraints):
             normalized_row = matrix[i, pivot_column_index]*matrix[pivot_row_index,:]
             matrix[i,:] -= normalized_row
 
+        iteration_count += 1
+
+    print(f"Simplex Iteration: {iteration_count}")  
     return matrix
 
 def format_matrix(matrix, variables):

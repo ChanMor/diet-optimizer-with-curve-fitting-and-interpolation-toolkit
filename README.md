@@ -32,15 +32,15 @@ Preprocessing the Matrix:
 
 Since you cannot proceed with the simplex method while there is a negative in the last column there must be a preprocessing to eliminate the negatives in the last column
 
-1. Pick any of the negative in last column and this will serve as the pivot row
+1. Pick any of the negative in last column and this will serve as the pivot row (exclude the last element in choosing a pivot row, as it would always be negative)
 2. Choose any negative in the row and this will serve as the pivot element and the pivot column
 3. Eliminate all rows similar to how you perform gauss jordan
 4. Repeat until no negative exist in the last column
 
 Simplex Method:
 
-1. Choose the highest magnitude negative number in the last row and this will serve as the pivot column
-2. Find the smallest non negative test ratio (last column / pivot column), this will serve ad the pivot row
+1. Choose the highest magnitude negative number in the last row and this will serve as the pivot column (exclude the last element in choosing a pivot row, as it would always be negative)
+2. Find the smallest non negative test ratio (last column / pivot column), this will serve as the pivot row
 3. Eliminate all rows similar to how you perform gauss jordan
 4. Repeat until no negative exist in the last row
    

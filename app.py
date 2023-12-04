@@ -24,7 +24,7 @@ class App:
         main_frame = ttk.Frame(self.root)
         main_label = ttk.Label(main_frame, text="Main Page", font=("Arial", 28), bootstyle="default")
         main_label.pack(pady=50)
-    
+
         generic_solver_btn = ttk.Button(main_frame, text="Generic Solver", bootstyle="light-outline", command=lambda: self.send_to(self.generic_solver_frame))
         generic_solver_btn.pack(pady=20)
 
