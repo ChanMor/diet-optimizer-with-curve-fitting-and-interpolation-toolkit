@@ -28,7 +28,7 @@ def generate_slack_variables(matrix, foods):
     
     return slack_variables
 
-def generate_dictionary(foods):
+def generate_solution_dictionary(foods):
     if foods == []:
         print("System: No Food Selected!")
         return None

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from util.food_data_util import foods, food_cost
-from util.generate_solution_util import generate_dictionary
+from util.generate_solution_util import generate_solution_dictionary
 import math
 
 class DietSolverPage(ttk.Frame):
@@ -37,7 +37,7 @@ class DietSolverPage(ttk.Frame):
         back_btn = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to(self.main_frame))
         back_btn.pack(side="left", anchor="w")
 
-        select_button = ttk.Button(self.button_frame, text="Generate", bootstyle="primary", command=self.generate)
+        select_button = ttk.Button(self.button_frame, text="Generate", bootstyle="primary", command=self.generate_optimal_solution)
         select_button.pack(side="left", padx=10, anchor="w")
 
         select_all_button = ttk.Button(self.button_frame, text="Select All", bootstyle="primary", command=self.select_all_foods)
@@ -68,7 +68,7 @@ class DietSolverPage(ttk.Frame):
         else:
             self.selected_foods.remove(food)
 
-    def generate(self):
+    def generate_optimal_solution(self):
         print("Selected Foods:", self.selected_foods)
 
         for table in self.table_frame.winfo_children():
@@ -77,7 +77,7 @@ class DietSolverPage(ttk.Frame):
 
         solution_dictionary = None
         if (self.selected_foods != []):
-            solution_dictionary = generate_dictionary(self.selected_foods)
+            solution_dictionary = generate_solution_dictionary(self.selected_foods)
 
         self.display_foods(solution_dictionary)
         print("Optimal Food Serving:", solution_dictionary)
