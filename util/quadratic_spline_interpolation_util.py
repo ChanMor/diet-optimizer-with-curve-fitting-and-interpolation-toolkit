@@ -122,6 +122,7 @@ def generate_estimate(data, estimate_input):
     x_values = data[0]
     y_values = data[1]
 
+    function_index = -1
     for i in range(len(x_values)-1):
 
         if estimate_input == x_values[i]:
@@ -136,13 +137,8 @@ def generate_estimate(data, estimate_input):
             function_index = i
             break
 
+    if function_index == -1:
+        return None
+
     estimate_output = functions[function_index](estimate_input)
     return estimate_output
-
-
-x = [0, 10, 15, 20, 22.5, 30]
-y = [0, 227.04, 362.78, 517.35, 602.97, 901.67]
-
-data = [x,y]
-
-print(generate_estimate(data, 16))
