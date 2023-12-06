@@ -14,6 +14,7 @@ class App:
         self.is_dark_mode = False
 
         self.main_frame = self.create_main_page()
+
         self.generic_solver_frame = GenericSolverPage(root, self.send_to, self.main_frame)
 
         self.diet_solver_frame = DietSolverPage(root, self.send_to, self.main_frame)
