@@ -37,18 +37,13 @@ def find_pivot_row_index(array, solution_column):
 
 def simplex_method(constraints):
     matrix = generate_augmented_matrix(constraints)
-
-    #transpose augmented matrix
     matrix = matrix.transpose()
-
-    #multiply last row (objective function) by negative 1, exclude row z
+    
     matrix[-1,:] *= -1
 
-    #create identity matrix based on num of rows
     num_rows = matrix.shape[0]
     identity_matrix = np.eye(num_rows)
 
-    #append identity matrix just before the last row
     matrix = np.insert(matrix, -1, identity_matrix, axis=1)
 
     iteration_count = 0
