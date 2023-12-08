@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk
+import ttkbootstrap as ttk
 
-from util.food_data_util import foods, food_cost
+from .optimized_solution import OptimizedSolution
+
+from util.food_data_util import foods
 from util.generate_solution_util import generate_solution_dictionary
 
 from texts import *
@@ -17,7 +19,6 @@ class DietOptimizerPage(ttk.Frame):
         self.searched_food = StringVar()
 
         self.foods = foods
-        self.food_cost = food_cost
         self.selected_foods = []
 
         self.initialize_frames()
@@ -31,9 +32,6 @@ class DietOptimizerPage(ttk.Frame):
 
         self.button_frame = ttk.Frame(self)
         self.button_frame.pack(pady=10, fill="x")
-
-        self.table_frame = ttk.Frame(self)
-        self.table_frame.pack(pady=10)
 
         self.generate_diet_optimizer_details()
         self.generate_food_checkbox()
@@ -63,6 +61,20 @@ class DietOptimizerPage(ttk.Frame):
         self.success_promt = ttk.Label(self.diet_optimizer_detail_frame, text="")
         self.success_promt.pack(side="left", anchor="w", padx=10, pady=10)
 
+    def generate_success_prompt(self):
+        entered_food = self.food_search_entry.get()
+        
+        if entered_food in self.foods and entered_food not in self.selected_foods:
+            self.success_promt.config(text=f"Succesfully added {self.food_search_entry.get()}", bootstyle="success")
+            self.selected_foods.append(entered_food)
+
+        elif entered_food in self.selected_foods:
+            self.success_promt.config(text=f"{entered_food} is already selected", bootstyle="danger")
+        elif entered_food == "Select desired food":
+            self.success_promt.config(text="")
+        else:
+            self.success_promt.config(text=f"Food not in list of food selection", bootstyle="danger")
+
     def generate_food_checkbox(self):
         checkbox_frame = ttk.Frame(self.checkbox_parent_frame)
         checkbox_frame.pack(side="left", padx=5, pady=5)
@@ -78,8 +90,8 @@ class DietOptimizerPage(ttk.Frame):
                 checkbox_frame.pack(side="left", anchor="nw", padx=5, pady=5)
 
     def generate_buttons(self):
-        back_btn = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to(self.main_frame))
-        back_btn.pack(side="left", anchor="w", padx=5)
+        back_button = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to(self.main_frame))
+        back_button.pack(side="left", anchor="w", padx=5)
 
         select_all_button = ttk.Button(self.button_frame, text="Select All", bootstyle="light-outline", command=self.select_all_foods)
         select_all_button.pack(side="left", anchor="w", padx=5)
@@ -91,15 +103,9 @@ class DietOptimizerPage(ttk.Frame):
         clear_button.pack(side="left", anchor="w", padx=5)
 
     def generate_optimal_solution(self):
-        print(self.selected_foods)
-        print("Selected Foods:", self.selected_foods)
-
-        self.success_promt.config(text="")
-        solution_dictionary = None
-        if self.selected_foods != []:
-            solution_dictionary = generate_solution_dictionary(self.selected_foods)
-
-        print("Optimal Food Serving:", solution_dictionary)
+        self.optimized_solution_frame = OptimizedSolution(self.root, self, self.selected_foods)
+        self.optimized_solution_frame.pack()
+        self.pack_forget()
 
     def on_entry_click(self):
         self.food_search_entry.delete(0, tk.END)
@@ -121,20 +127,6 @@ class DietOptimizerPage(ttk.Frame):
                         checkbox.state(['selected'])
 
         self.generate_success_prompt()
-
-    def generate_success_prompt(self):
-        entered_food = self.food_search_entry.get()
-        
-        if entered_food in self.foods and entered_food not in self.selected_foods:
-            self.success_promt.config(text=f"Succesfully added {self.food_search_entry.get()}", bootstyle="success")
-            self.selected_foods.append(entered_food)
-
-        elif entered_food in self.selected_foods:
-            self.success_promt.config(text=f"{entered_food} is already selected", bootstyle="danger")
-        elif entered_food == "Select desired food":
-            self.success_promt.config(text="")
-        else:
-            self.success_promt.config(text=f"Food not in list of food selection", bootstyle="danger")
 
     def toggle_selection(self, food, checkbox_var):
         selected = checkbox_var.get()
@@ -163,4 +155,8 @@ class DietOptimizerPage(ttk.Frame):
         self.generate_food_checkbox()
         self.selected_foods.clear()
         self.success_promt.config(text="")
+    
+    def send_to_optimized_solution_frame(self):
+        self.optimized_solution_frame.pack()
+        self.pack_forget()
         

@@ -24,6 +24,12 @@ diet_solver_button_text = "             Diet Optimizer             "
 quadratic_spline_interpolation_button_text = "Quadratic Spline Interpolation"
 polynomial_regression_button_text = "       Polynomial Regression      "
 
-csv_format_text = "Each data points X and Y are comma separated, and newline indicates new set of data points."
+csv_format_text = "Each data points are comma separated and newline indicates new set of data points"
 
 food_search_description = "Use the food search bar function or manually tick checkboxes to select desired foods."
+
+csv_format_text = "Each data points are comma separated and newline indicates new set of data points"
+
+optimized_solution_text = "This is the most cost efficient combination of foods based on your selection that will meet your minimum nutrient daily needs."
+
+no_optimized_solution_text = "Given the list of selected foods, there is no way to meet the daily minimum nutrient requirements. Try choosing more foods or vary your selection."

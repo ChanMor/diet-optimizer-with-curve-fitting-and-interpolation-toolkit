@@ -3,7 +3,7 @@ from tkinter import filedialog
 import ttkbootstrap as ttk
 
 from util.quadratic_spline_interpolation_util import *
-from .texts import *
+from texts import *
 
 class QuadraticSplineInterpolationPage(ttk.Frame):
     def __init__(self, root, send_to_main, main_frame):
@@ -92,14 +92,14 @@ class QuadraticSplineInterpolationPage(ttk.Frame):
         button_frame.pack()
 
     def generate_csv_format(self):
-        csv_format = ttk.Toplevel(self.root)
-        csv_format.title("CSV Format")
-        csv_format.geometry("200x300")
+        csv_format_window = ttk.Toplevel(self.root)
+        csv_format_window.title("CSV Format")
+        csv_format_window.geometry("200x300")
 
         x_values = [1, 4, 6, 7, 8, 11, 15]
         y_values = [10.00, 25.00, 33.50, 15.75, 28.00, 34.02, 30.00]
 
-        values_frame = ttk.Frame(csv_format)
+        values_frame = ttk.Frame(csv_format_window)
         values_frame.pack(pady=10)
 
         csv_format_label = ttk.Label(values_frame, text="CSV File Format", font=("Bahnschrift Light", 10))

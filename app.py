@@ -2,7 +2,7 @@ from tkinter import *
 import ttkbootstrap as ttk
 from texts import *
 
-from solvers.diet_solver import DietOptimizerPage
+from solvers.diet_optimizer import DietOptimizerPage
 from solvers.polynomial_regression import PolynomialRegressionPage
 from solvers.quadratic_spline_interpolation import QuadraticSplineInterpolationPage
 
@@ -54,7 +54,7 @@ class App:
         diet_solver_button = ttk.Button(self.diet_solver_content_frame, text=diet_solver_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.diet_solver_frame))
         diet_solver_button.pack(side="top", anchor="w", pady=10)
 
-        diet_solver_description_label = ttk.Label(self.diet_solver_content_frame, text=diet_solver_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left", anchor="w")
+        diet_solver_description_label = ttk.Label(self.diet_solver_content_frame, text=diet_solver_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left")
         diet_solver_description_label.pack(side="top", anchor="w")
 
         self.diet_solver_content_frame.pack(padx=130, pady=10, fill="both", expand=True)
@@ -65,7 +65,7 @@ class App:
         polynomial_regression_button = ttk.Button(self.polynomial_regression_content_frame, text=polynomial_regression_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.polynomial_regression_frame))
         polynomial_regression_button.pack(side="top", anchor="w", pady=10)
 
-        polynomial_regression_description_label = ttk.Label(self.polynomial_regression_content_frame, text=polynomial_regression_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left", anchor="w")
+        polynomial_regression_description_label = ttk.Label(self.polynomial_regression_content_frame, text=polynomial_regression_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left")
         polynomial_regression_description_label.pack(side="top", anchor="w")
 
         self.polynomial_regression_content_frame.pack(padx=130, pady=10, fill="both", expand=True)
@@ -76,7 +76,7 @@ class App:
         quadratic_spline_interpolation_button = ttk.Button(self.quadratic_spline_interpolation_content_frame, text=quadratic_spline_interpolation_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.quadratic_spline_interpolation_frame))
         quadratic_spline_interpolation_button.pack(side="top", anchor="w", pady=10)
 
-        quadratic_spline_interpolation_description_label = ttk.Label(self.quadratic_spline_interpolation_content_frame, text=quadratic_spline_interpolation_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left", anchor="w")
+        quadratic_spline_interpolation_description_label = ttk.Label(self.quadratic_spline_interpolation_content_frame, text=quadratic_spline_interpolation_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left")
         quadratic_spline_interpolation_description_label.pack(side="top", anchor="w")
 
         self.quadratic_spline_interpolation_content_frame.pack(padx=130, pady=10, fill="both", expand=True)

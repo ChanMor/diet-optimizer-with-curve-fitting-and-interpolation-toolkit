@@ -3,7 +3,7 @@ from tkinter import filedialog
 import ttkbootstrap as ttk
 
 from util.polynomial_regression_util import *
-from .texts import *
+from texts import *
 
 class PolynomialRegressionPage(ttk.Frame):
     def __init__(self, root, send_to_main, main_frame):
@@ -184,3 +184,6 @@ class PolynomialRegressionPage(ttk.Frame):
     def error(self):
         self.result_canvas.delete("all")
         self.result_canvas.create_text(10, 10, anchor="nw", text="Invalid input. Please check your input values.", width=400, fill="lightcoral")
+
+ 
+
