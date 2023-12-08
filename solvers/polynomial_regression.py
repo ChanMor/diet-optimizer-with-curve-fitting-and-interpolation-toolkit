@@ -38,10 +38,10 @@ class PolynomialRegressionPage(ttk.Frame):
         polynomial_regression_label = ttk.Label(self.frame_top, text="Polynomial Regression", font=("Arial Black", 28))
         polynomial_regression_label.pack(pady=15, anchor="w")
 
-        csv_file_format_label = ttk.Label(self.frame_top, text="CSV FILE FORMAT", font=("Bahnschrift SemiBold", 10), wraplength=800, justify="left")
+        csv_file_format_label = ttk.Label(self.frame_top, text="CSV FILE FORMAT", font=("Bahnschrift SemiBold", 10))
         csv_file_format_label.pack(side="top", anchor="w")
 
-        csv_input_format_label = ttk.Label(self.frame_top, text=csv_format_text, font=("Bahnschrift Light", 10), wraplength=800, justify="left")
+        csv_input_format_label = ttk.Label(self.frame_top, text=csv_format_text, font=("Bahnschrift Light", 10))
         csv_input_format_label.pack(side="top", anchor="w")
 
         csv_example_button = ttk.Button(self.frame_top, text="     See Example     ", bootstyle="light-outline", command=self.generate_csv_format)

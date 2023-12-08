@@ -1,7 +1,7 @@
 project_title = "SOLVER TOOLKIT"
 
 project_description = (
-    "An app featuring a diet solver using the Simplex Method for minimization with mixed constraints. "
+    "An app featuring a diet solver using the simplex method as dula problem for minimization. "
     "It also includes a generic solver for generating polynomial regression functions and quadratic spline interpolation."
 )
 
@@ -24,4 +24,6 @@ diet_solver_button_text = "             Diet Optimizer             "
 quadratic_spline_interpolation_button_text = "Quadratic Spline Interpolation"
 polynomial_regression_button_text = "       Polynomial Regression      "
 
-csv_format_text = "Each data points X and Y are comma separated, and newline indicates new set of data points"
+csv_format_text = "Each data points X and Y are comma separated, and newline indicates new set of data points."
+
+food_search_description = "Use the food search bar function or manually tick checkboxes to select desired foods."

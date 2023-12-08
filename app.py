@@ -2,7 +2,7 @@ from tkinter import *
 import ttkbootstrap as ttk
 from texts import *
 
-from solvers.diet_solver import DietSolverPage
+from solvers.diet_solver import DietOptimizerPage
 from solvers.polynomial_regression import PolynomialRegressionPage
 from solvers.quadratic_spline_interpolation import QuadraticSplineInterpolationPage
 
@@ -24,9 +24,9 @@ class App:
         self.generate_polynomial_regression_content()
         self.generate_quadratic_spline_interpolation_content()
 
+        self.diet_solver_frame = DietOptimizerPage(self.root, self.send_to, self.main_frame)
         self.polynomial_regression_frame = PolynomialRegressionPage(self.root, self.send_to, self.main_frame)
         self.quadratic_spline_interpolation_frame = QuadraticSplineInterpolationPage(self.root, self.send_to, self.main_frame)
-        self.diet_solver_frame = DietSolverPage(self.root, self.send_to, self.main_frame)
 
         self.frames.append(self.main_frame)
         self.frames.append(self.diet_solver_frame)
