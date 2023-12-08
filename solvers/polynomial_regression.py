@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import filedialog
 import ttkbootstrap as ttk
-from util.polynomial_regression_util import *
 
+from util.polynomial_regression_util import *
 from .texts import *
 
 class PolynomialRegressionPage(ttk.Frame):
@@ -118,9 +118,6 @@ class PolynomialRegressionPage(ttk.Frame):
             data_label = ttk.Label(values_frame, text=f"    {format(x, "02d")}  ,\t{format(y, ".2f")}", font=("Aptos", 10))
             data_label.pack(anchor="w", pady=2)
 
-
-
-
     def browse_csv(self):
         self.data_entry_x.config(state="disabled")
         self.data_entry_y.config(state="disabled")
@@ -163,6 +160,7 @@ class PolynomialRegressionPage(ttk.Frame):
         try:
             degree = int(self.degree_entry.get())
 
+
             if self.file_y.get() == "CSV file successfully uploaded":
                 data = self.load_csv_data()
             else: 
@@ -170,12 +168,19 @@ class PolynomialRegressionPage(ttk.Frame):
 
             estimate_data = float(self.estimate_entry.get())
 
-            result = get_polynomial_regression_function(degree, data)
+            if degree > len(data[0]) - 1:
+                self.error()
+                return
+
+            result = get_polynomial_regression_function(degree, data)[1]
             estimate_result = estimate_polynomial_regression(degree, data, estimate_data)
             
             self.result_canvas.delete("all")
-            self.result_canvas.create_text(10, 10, anchor="nw", text=f"Polynomial Function:\n {result}\n\nEstimate at {estimate_data}:\n {estimate_result}", width=400, fill="lightgrey")
+            self.result_canvas.create_text(10, 10, anchor="nw", text=f"Polynomial Function:\n {result}\n\nEstimate at {estimate_data}:\n {format(estimate_result, ".4f")}", width=400, fill="lightgrey")
 
         except ValueError:
-            self.result_canvas.delete("all")
-            self.result_canvas.create_text(10, 10, anchor="nw", text="Invalid input. Please check your input values.", width=400, fill="lightcoral")
+            self.error()
+
+    def error(self):
+        self.result_canvas.delete("all")
+        self.result_canvas.create_text(10, 10, anchor="nw", text="Invalid input. Please check your input values.", width=400, fill="lightcoral")

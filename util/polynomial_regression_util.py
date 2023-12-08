@@ -61,14 +61,16 @@ def get_function_coefficients(degree, datapoints):
 def get_polynomial_regression_function(degree, datapoints):
     result = get_function_coefficients(degree, datapoints)
 
+    formated_function_body = str(format(result[0], ".2f"))
     function_body = str(result[0])
     for i, coeff in enumerate(result[1:], start=1):
         function_body += f" + {str(coeff)} * x ** {i}"
+        formated_function_body += f" + {str(format(coeff, ".2f"))} * x ** {i}"
     
-    return function_body
+    return function_body,  formated_function_body
 
 def estimate_polynomial_regression(degree, datapoints, data):
-    function_body = get_polynomial_regression_function(degree, datapoints)
+    function_body = get_polynomial_regression_function(degree, datapoints)[0]
 
     polynomial_function = lambda x: eval(function_body)
     return polynomial_function(data)

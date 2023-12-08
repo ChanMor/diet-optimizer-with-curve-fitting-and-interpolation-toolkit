@@ -51,7 +51,7 @@ class App:
     def generate_diet_solver_content(self):
         self.diet_solver_content_frame = ttk.Frame(self.main_frame)
 
-        diet_solver_button = ttk.Button(self.diet_solver_content_frame, text=diet_solver_button_text, bootstyle="light", command=lambda: self.send_to(self.diet_solver_frame))
+        diet_solver_button = ttk.Button(self.diet_solver_content_frame, text=diet_solver_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.diet_solver_frame))
         diet_solver_button.pack(side="top", anchor="w", pady=10)
 
         diet_solver_description_label = ttk.Label(self.diet_solver_content_frame, text=diet_solver_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left", anchor="w")
@@ -62,7 +62,7 @@ class App:
     def generate_polynomial_regression_content(self):
         self.polynomial_regression_content_frame = ttk.Frame(self.main_frame)
 
-        polynomial_regression_button = ttk.Button(self.polynomial_regression_content_frame, text=polynomial_regression_button_text, bootstyle="light", command=lambda: self.send_to(self.polynomial_regression_frame))
+        polynomial_regression_button = ttk.Button(self.polynomial_regression_content_frame, text=polynomial_regression_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.polynomial_regression_frame))
         polynomial_regression_button.pack(side="top", anchor="w", pady=10)
 
         polynomial_regression_description_label = ttk.Label(self.polynomial_regression_content_frame, text=polynomial_regression_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left", anchor="w")
@@ -73,7 +73,7 @@ class App:
     def generate_quadratic_spline_interpolation_content(self):
         self.quadratic_spline_interpolation_content_frame = ttk.Frame(self.main_frame)
 
-        quadratic_spline_interpolation_button = ttk.Button(self.quadratic_spline_interpolation_content_frame, text=quadratic_spline_interpolation_button_text, bootstyle="light", command=lambda: self.send_to(self.quadratic_spline_interpolation_frame))
+        quadratic_spline_interpolation_button = ttk.Button(self.quadratic_spline_interpolation_content_frame, text=quadratic_spline_interpolation_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.quadratic_spline_interpolation_frame))
         quadratic_spline_interpolation_button.pack(side="top", anchor="w", pady=10)
 
         quadratic_spline_interpolation_description_label = ttk.Label(self.quadratic_spline_interpolation_content_frame, text=quadratic_spline_interpolation_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left", anchor="w")
