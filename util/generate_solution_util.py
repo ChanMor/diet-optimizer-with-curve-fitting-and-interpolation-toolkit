@@ -31,12 +31,14 @@ def generate_slack_variables(matrix, foods):
 def generate_solution_dictionary(foods):
     if foods == []:
         print("System: No Food Selected!")
-        return None
+        return (None, None)
 
-    simplex_matrix = simplex_method(foods)
+    simplex_matrix, simplex_iteration = simplex_method(foods)
 
     if simplex_matrix is None:
-        return None
+        return (None, None)
+
+    simplex_iteration = simplex_method(foods)[1]
 
     solution_array = simplex_matrix[-1,:-2]
     solution_array = np.append(solution_array, simplex_matrix[-1, -1:])
@@ -47,5 +49,5 @@ def generate_solution_dictionary(foods):
 
     solution_dictionary = dict(zip(solution_dictionary_keys, solution_array))
     
-    return solution_dictionary
+    return (solution_dictionary, simplex_iteration)
 

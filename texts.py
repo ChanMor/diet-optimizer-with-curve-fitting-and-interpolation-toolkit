@@ -33,3 +33,8 @@ csv_format_text = "Each data points are comma separated and newline indicates ne
 optimized_solution_text = "This is the most cost efficient combination of foods based on your selection that will meet your minimum nutrient daily needs."
 
 no_optimized_solution_text = "Given the list of selected foods, there is no way to meet the daily minimum nutrient requirements. Try choosing more foods or vary your selection."
+
+simplex_iteration_text = (
+    "Below is the matrices for each iteration of the simplex method as a dual problem for solving the optimal "
+    "food combination that would meet minimum daily nutrient requirements."
+)

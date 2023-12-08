@@ -48,12 +48,15 @@ def simplex_method(constraints):
 
     iteration_count = 0
     last_row = matrix[-1,:-1]
-    while has_negative(last_row):
 
+    simplex_iteration = []
+
+    while has_negative(last_row):
+    
         if iteration_count == 1000:
             print(f"Simplex Iteration: {iteration_count}")  
             print("System: No Feasible Solution!")
-            return None
+            return (None, None)
 
         last_row = matrix[-1,:-1]
 
@@ -67,7 +70,7 @@ def simplex_method(constraints):
         if pivot_row_index is None:
             print(f"Simplex Iteration: {iteration_count}")  
             print("System: No Feasible Solution!")
-            return None
+            return (None, None)
 
         matrix[pivot_row_index,:] /= matrix[pivot_row_index, pivot_column_index]
 
@@ -78,7 +81,8 @@ def simplex_method(constraints):
             normalized_row = matrix[i, pivot_column_index]*matrix[pivot_row_index,:]
             matrix[i,:] -= normalized_row
 
+        simplex_iteration.append(np.copy(matrix))
         iteration_count += 1
 
-    return matrix
+    return (matrix, simplex_iteration)
 

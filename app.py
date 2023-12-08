@@ -10,7 +10,7 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("CMSC 150 Project")
-        self.root.geometry("1080x720")
+        self.root.geometry("1280x820")
     
         self.frames = []
         self.initialize_frames()
