@@ -18,15 +18,13 @@ class SimplexIteration(ScrolledFrame):
         self.simplex_iteration_details_frame = ttk.Frame(self)
         self.simplex_iteration_details_frame.pack(pady=10)
 
-        self.button_frame = ttk.Frame(self)
-        self.button_frame.pack(pady=10)
+        self.functions_frame = ttk.Frame(self)
+        self.functions_frame.pack(pady=10)
 
-        self.simplex_iteration_frame= ttk.Frame(self)
-        self.simplex_iteration_frame.pack(pady=10)
+        self.matrix_display = None
 
         self.generate_simplex_iteration_details()
-        self.generate_buttons()
-        self.generate_simplex_iteration()
+        self.generate_functions()
 
     def generate_simplex_iteration_details(self):
         simplex_iteration_title_label = ttk.Label(self.simplex_iteration_details_frame, text="Simplex Iterations", font=("Arial Black", 28))
@@ -35,14 +33,38 @@ class SimplexIteration(ScrolledFrame):
         simplex_iteration_description_label = ttk.Label(self.simplex_iteration_details_frame, text=simplex_iteration_text, font=("Bahnschrift Light", 10), wraplength=800, justify="left")
         simplex_iteration_description_label.pack(pady=5, anchor="w")
 
-    def generate_simplex_iteration(self):
-        for matrix in self.simplex_iteration:
-            matrix_display = MatrixDisplay(self, matrix, self.selected_foods)
-            matrix_display.pack(pady=10)
+    def generate_functions(self):
+        back_button = ttk.Button(self.functions_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to_optimized_solution_frame())
+        back_button.pack(side="left", anchor="w", padx=10)
 
-    def generate_buttons(self):
-        back_button = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to_optimized_solution_frame())
-        back_button.pack(anchor="w", padx=5)
+        generate_iteration_button = ttk.Button(self.functions_frame, text="Generate Iteration", bootstyle="light-outline", command=lambda: self.generate_simplex_iteration())
+        generate_iteration_button.pack(side="left", anchor="w", padx=5)
+
+        self.iteration_count_spinbox = ttk.Spinbox(self.functions_frame, from_=1, to=len(self.simplex_iteration), style="secondary.TSpinbox")
+        self.iteration_count_spinbox.pack(side="left", anchor="w", padx=5)
+
+        self.success_promt = ttk.Label(self, text="")
+        self.success_promt.pack()
+
+    def generate_simplex_iteration(self):
+        self.success_promt.config(text="")
+
+        if self.iteration_count_spinbox.get() == "":
+            self.success_promt.config(text="Select iteration count first", bootstyle="danger")
+            return
+
+        try:
+            iteration_count = int(self.iteration_count_spinbox.get()) - 1
+        except:
+            self.success_promt.config(text="Invalid iteration count", bootstyle="danger")
+            return
+
+        if self.matrix_display is not None:
+            self.matrix_display.destroy()
+            
+        self.matrix_display = MatrixDisplay(self, self.simplex_iteration[iteration_count], self.selected_foods)
+        self.matrix_display.pack(pady=10)
+
 
     def send_to_optimized_solution_frame(self):
         self.optimized_solution_frame.pack()

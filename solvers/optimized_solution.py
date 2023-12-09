@@ -32,6 +32,7 @@ class OptimizedSolution(ttk.Frame):
 
         self.generate_diet_optimizer_details()
         self.generate_buttons()
+        self.generate_optimal_solution()
         self.display_solution()
 
         self.disable_simplex_iterations()
@@ -43,8 +44,8 @@ class OptimizedSolution(ttk.Frame):
         self.optimized_solution_description_label = ttk.Label(self.optimized_solution_detail_frame, text=optimized_solution_text, font=("Bahnschrift Light", 10), wraplength=800, justify="left")
         self.optimized_solution_description_label.pack(pady=5, anchor="w")
 
-        self.no_food_selected_prompt = ttk.Label(self.optimized_solution_detail_frame, text="", font=("Bahnschrift Light", 10), wraplength=800, justify="left", bootstyle="danger")
-        self.no_food_selected_prompt.pack(pady=5, anchor="w")
+        self.warning_prompt = ttk.Label(self.optimized_solution_detail_frame, text="", font=("Bahnschrift Light", 10), wraplength=800, justify="left", bootstyle="danger")
+        self.warning_prompt.pack(pady=5, anchor="w")
 
     def generate_buttons(self):
         back_button = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to_diet_optimizer())
@@ -55,32 +56,24 @@ class OptimizedSolution(ttk.Frame):
 
     def disable_simplex_iterations(self):
         if self.selected_foods == []:
-            self.no_food_selected_prompt.config(text="Warning: No Food Selected")
+            self.warning_prompt.config(text="Warning: No Food Selected")
+            self.simplex_iterations_button.config(state="disabled")
+        elif self.simplex_iteration is None:
             self.simplex_iterations_button.config(state="disabled")
         else:
-            self.no_food_selected_prompt.config(text="")
+            self.warning_prompt.config(text="")
             self.simplex_iterations_button.config(state="normal")
 
     def generate_optimal_solution(self):
-        print(self.selected_foods)
-        print("Selected Foods:", self.selected_foods)
-
-        self.solution_dictionary = None
-        if self.selected_foods != []:
-            self.solution_dictionary, self.simplex_iteration = generate_solution_dictionary(self.selected_foods)
+        self.solution_dictionary, self.simplex_iteration = generate_solution_dictionary(self.selected_foods)
             
-        print("Optimal Food Serving:", self.solution_dictionary)
-
     def generate_simplex_iteration_frame(self):
         if self.simplex_iteration != []:
             self.simplex_iteration_frame = SimplexIteration(self.root, self.simplex_iteration, self.selected_foods, self)
                 
         self.send_to_simplex_iteration_frame()
 
-
     def display_solution(self):
-        self.generate_optimal_solution()
-
         if self.solution_dictionary is None:
             self.optimized_solution_description_label.config(text=no_optimized_solution_text, font=("Bahnschrift Light", 10), wraplength=800, justify="left")
             return
