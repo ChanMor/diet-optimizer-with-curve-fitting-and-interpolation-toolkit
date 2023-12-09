@@ -34,6 +34,8 @@ class OptimizedSolution(ttk.Frame):
         self.generate_buttons()
         self.display_solution()
 
+        self.disable_simplex_iterations()
+
     def generate_diet_optimizer_details(self):
         optimized_solution_title_label = ttk.Label(self.optimized_solution_detail_frame, text="Optimized Food Combination", font=("Arial Black", 28))
         optimized_solution_title_label.pack(pady=15, anchor="w")
@@ -41,12 +43,23 @@ class OptimizedSolution(ttk.Frame):
         self.optimized_solution_description_label = ttk.Label(self.optimized_solution_detail_frame, text=optimized_solution_text, font=("Bahnschrift Light", 10), wraplength=800, justify="left")
         self.optimized_solution_description_label.pack(pady=5, anchor="w")
 
+        self.no_food_selected_prompt = ttk.Label(self.optimized_solution_detail_frame, text="", font=("Bahnschrift Light", 10), wraplength=800, justify="left", bootstyle="danger")
+        self.no_food_selected_prompt.pack(pady=5, anchor="w")
+
     def generate_buttons(self):
         back_button = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to_diet_optimizer())
         back_button.pack(side="left", anchor="w", padx=5)
 
-        simplex_iterations_button = ttk.Button(self.button_frame, text="See Simplex Iterations", bootstyle="light-outline", command= self.generate_simplex_iteration_frame)
-        simplex_iterations_button.pack(side="left", anchor="w", padx=5)
+        self.simplex_iterations_button = ttk.Button(self.button_frame, text="See Simplex Iterations", bootstyle="light-outline", command= self.generate_simplex_iteration_frame)
+        self.simplex_iterations_button.pack(side="left", anchor="w", padx=5)
+
+    def disable_simplex_iterations(self):
+        if self.selected_foods == []:
+            self.no_food_selected_prompt.config(text="Warning: No Food Selected")
+            self.simplex_iterations_button.config(state="disabled")
+        else:
+            self.no_food_selected_prompt.config(text="")
+            self.simplex_iterations_button.config(state="normal")
 
     def generate_optimal_solution(self):
         print(self.selected_foods)

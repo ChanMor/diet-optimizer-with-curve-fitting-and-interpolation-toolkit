@@ -21,12 +21,11 @@ class MatrixDisplay(Frame):
         simplex_iteration_scrolled_frame = ScrolledFrame(self, width=scrolled_frame_width)
         simplex_iteration_scrolled_frame.pack(expand=True, fill='both')
 
-        simplex_iteration_treeview = ttk.Treeview(simplex_iteration_scrolled_frame, columns=columns_names, show="headings")
+        simplex_iteration_treeview = ttk.Treeview(simplex_iteration_scrolled_frame, columns=columns_names, show="headings", height=self.matrix.shape[0])
         simplex_iteration_treeview.pack(expand=True, fill='both')
 
         for column_name in columns_names:
             simplex_iteration_treeview.heading(column_name, text=column_name)
-
 
         for i in range(self.matrix.shape[0]):
             row_values = tuple(self.matrix[i, :])
