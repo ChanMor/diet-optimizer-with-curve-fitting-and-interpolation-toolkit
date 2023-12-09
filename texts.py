@@ -35,6 +35,6 @@ optimized_solution_text = "This is the most cost efficient combination of foods 
 no_optimized_solution_text = "Given the list of selected foods, there is no way to meet the daily minimum nutrient requirements. Try choosing more foods or vary your selection."
 
 simplex_iteration_text = (
-    "Below is the matrices for each iteration of the simplex method as a dual problem for solving the optimal "
+    "Choose specific iteration count to display below the matrix for that iteration of the simplex method set up as a dual problem for solving the optimal "
     "food combination that would meet minimum daily nutrient requirements."
 )

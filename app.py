@@ -2,9 +2,9 @@ from tkinter import *
 import ttkbootstrap as ttk
 from texts import *
 
-from solvers.diet_optimizer import DietOptimizerPage
-from solvers.polynomial_regression import PolynomialRegressionPage
-from solvers.quadratic_spline_interpolation import QuadraticSplineInterpolationPage
+from frames.diet_optimizer import DietOptimizerPage
+from frames.polynomial_regression import PolynomialRegressionPage
+from frames.quadratic_spline_interpolation import QuadraticSplineInterpolationPage
 
 class App:
     def __init__(self, root):

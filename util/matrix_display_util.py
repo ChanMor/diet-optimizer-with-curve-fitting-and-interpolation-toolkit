@@ -2,7 +2,6 @@ import numpy as np
 
 from tkinter import *
 import ttkbootstrap as ttk
-from ttkbootstrap.scrolled import ScrolledFrame
 
 class MatrixDisplay(Frame):
     def __init__(self, root, matrix, selected_foods):
