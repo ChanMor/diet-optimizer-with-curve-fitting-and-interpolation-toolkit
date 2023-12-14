@@ -1,11 +1,10 @@
 from tkinter import *
 import ttkbootstrap as ttk
-from ttkbootstrap.scrolled import ScrolledFrame
 
 from util.matrix_display_util import MatrixDisplay
 from texts import *
 
-class SimplexIteration(ScrolledFrame):
+class SimplexIteration(ttk.Frame):
     def __init__(self, root, simplex_iteration, selected_foods, optimized_solution_frame):
         super().__init__(root)
         self.simplex_iteration = simplex_iteration

@@ -4,7 +4,7 @@ import ttkbootstrap as ttk
 
 from .optimized_solution import OptimizedSolution
 
-from util.food_data_util import foods
+from util.food_data_util import foods, food_data, food_cost, food_serving, nutrients
 from util.generate_solution_util import generate_solution_dictionary
 
 from texts import *
@@ -17,6 +17,11 @@ class DietOptimizerPage(ttk.Frame):
         self.main_frame = main_frame
 
         self.searched_food = StringVar()
+
+        self.food_cost = food_cost
+        self.food_serving = food_serving
+        self.food_data = food_data
+        self.nutrients = nutrients
 
         self.foods = foods
         self.selected_foods = []
@@ -93,6 +98,10 @@ class DietOptimizerPage(ttk.Frame):
         back_button = ttk.Button(self.button_frame, text="Back", bootstyle="light-outline", command=lambda: self.send_to(self.main_frame))
         back_button.pack(side="left", anchor="w", padx=5)
 
+        nutrient_table_button = ttk.Button(self.button_frame, text="See Nutrients Table", bootstyle="light-outline", command=self.genetate_nutrient_table)
+        nutrient_table_button.pack(side="left", anchor="w", padx=5)
+
+
         select_all_button = ttk.Button(self.button_frame, text="Select All", bootstyle="light-outline", command=self.select_all_foods)
         select_all_button.pack(side="left", anchor="w", padx=5)
 
@@ -101,6 +110,44 @@ class DietOptimizerPage(ttk.Frame):
 
         clear_button = ttk.Button(self.button_frame, text="Clear Selection", bootstyle="danger", command=self.clear_selection)
         clear_button.pack(side="left", anchor="w", padx=5)
+
+    def genetate_nutrient_table(self):
+        nutrient_table = ttk.Toplevel(self.root)
+        nutrient_table.title("Nutrient Table")
+        nutrient_table.geometry("720x400")
+
+        nutrient_table_frame = ttk.Frame(nutrient_table)
+        nutrient_table_frame.pack(padx=80, pady=50)
+
+        food_search_label = ttk.Label(nutrient_table_frame, text="Below is the list of foods and its corresponding cost and nutritional value per serving", font=("Bahnschrift Light", 10))
+        food_search_label.pack(pady=10, anchor="w")
+
+        column_names = ["Foods", "Costs", "Serving"]
+        column_names.extend(self.nutrients)
+
+        simplex_iteration_y_scrollbar = ttk.Scrollbar(nutrient_table_frame, bootstyle="dark-round")
+        simplex_iteration_y_scrollbar.pack(side="right", fill="y")
+
+        simplex_iteration_x_scrollbar = ttk.Scrollbar(nutrient_table_frame, orient="horizontal", bootstyle="dark-round")
+        simplex_iteration_x_scrollbar.pack(side="bottom", fill="x")
+
+        nutrient_treeview = ttk.Treeview(nutrient_table_frame, columns=column_names, show="headings",  yscrollcommand=simplex_iteration_y_scrollbar.set, xscrollcommand=simplex_iteration_x_scrollbar.set, height=15, bootstyle="dark")
+        
+        for column_name in column_names:
+            nutrient_treeview.heading(column_name, text=column_name, anchor="w")
+            nutrient_treeview.column(column_name, width=100)
+
+
+        for foods, nutrients in self.food_data.items():
+            content = [foods, self.food_cost[foods], self.food_serving[foods]]
+            content.extend(nutrients)
+            row_values = tuple(content)
+            nutrient_treeview.insert("", "end", values=row_values)
+
+        simplex_iteration_y_scrollbar.config(command=nutrient_treeview.yview)
+        simplex_iteration_x_scrollbar.config(command=nutrient_treeview.xview)
+
+        nutrient_treeview.pack()
 
     def generate_optimal_solution(self):
         self.optimized_solution_frame = OptimizedSolution(self.root, self, self.selected_foods)
@@ -150,9 +197,10 @@ class DietOptimizerPage(ttk.Frame):
     def clear_selection(self):
         for frame in self.checkbox_parent_frame.winfo_children():
             if isinstance(frame, ttk.Frame):
-                frame.destroy()
-
-        self.generate_food_checkbox()
+                for checkbox in frame.winfo_children():
+                    if isinstance(checkbox, ttk.Checkbutton):
+                        checkbox.state(['!selected'])
+                
         self.selected_foods.clear()
         self.success_promt.config(text="")
     

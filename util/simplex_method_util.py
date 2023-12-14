@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 from .augmented_matrix_util import generate_augmented_matrix
 
 def has_negative(array):
@@ -38,8 +37,8 @@ def find_pivot_row_index(array, solution_column):
 def simplex_method(constraints):
     matrix = generate_augmented_matrix(constraints)
     matrix = matrix.transpose()
-    
-    matrix[-1,:] *= -1
+
+    matrix[-1,:-1] *= -1
 
     num_rows = matrix.shape[0]
     identity_matrix = np.eye(num_rows)

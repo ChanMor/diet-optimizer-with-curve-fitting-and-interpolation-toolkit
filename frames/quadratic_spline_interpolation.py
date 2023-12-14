@@ -169,7 +169,7 @@ class QuadraticSplineInterpolationPage(ttk.Frame):
 
             y_coordinate = 10  
             for i, function_string in enumerate(results, start=1):
-                self.result_canvas.create_text(10, y_coordinate, anchor="nw", text=f"[{i}] Function:   {function_string}\n", width=400, fill="lightgrey")
+                self.result_canvas.create_text(10, y_coordinate, anchor="nw", text=f"[{i}] Function:   {function_string.replace("**", "^")}\n", width=400, fill="lightgrey")
                 y_coordinate += 20 
 
             if estimate_result is None:

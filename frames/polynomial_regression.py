@@ -176,7 +176,7 @@ class PolynomialRegressionPage(ttk.Frame):
             estimate_result = estimate_polynomial_regression(degree, data, estimate_data)
             
             self.result_canvas.delete("all")
-            self.result_canvas.create_text(10, 10, anchor="nw", text=f"Polynomial Function:\n {result}\n\nEstimate at {estimate_data}:\n {format(estimate_result, ".4f")}", width=400, fill="lightgrey")
+            self.result_canvas.create_text(10, 10, anchor="nw", text=f"Polynomial Function:\n {result.replace("**", "^")}\n\nEstimate at {estimate_data}:\n {format(estimate_result, ".4f")}", width=400, fill="lightgrey")
 
         except ValueError:
             self.error()

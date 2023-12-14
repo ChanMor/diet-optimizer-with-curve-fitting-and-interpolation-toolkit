@@ -2,8 +2,9 @@ from tkinter import *
 import ttkbootstrap as ttk
 
 from .simplex_iteration import SimplexIteration
-from util.food_data_util import foods, food_cost
 from util.generate_solution_util import generate_solution_dictionary
+
+from util.food_data_util import foods, food_cost
 
 from texts import *
 
@@ -105,7 +106,7 @@ class OptimizedSolution(ttk.Frame):
                 serving_label = ttk.Label(serving_frame, text=f"{format(serving, ".2f")}", font=("Bahnschrift Light", 10))
                 serving_label.pack(anchor="w", pady=5)
 
-                serving_label = ttk.Label(cost_frame, text=f"$ {format(self.food_cost[food]*serving, ".3f")}", font=("Bahnschrift Light", 10))
+                serving_label = ttk.Label(cost_frame, text=f"$ {format(self.food_cost[food]*serving, ".2f")}", font=("Bahnschrift Light", 10))
                 serving_label.pack(anchor="w", pady=5)
 
         total_food_label = ttk.Label(food_frame, text="Total Cost", font=("Bahnschrift Light", 10))
