@@ -50,6 +50,7 @@ def simplex_method(constraints):
     last_row = matrix[-1,:-1]
 
     simplex_iteration = []
+    simplex_iteration.append(np.copy(matrix))
 
     while has_negative(last_row):
     

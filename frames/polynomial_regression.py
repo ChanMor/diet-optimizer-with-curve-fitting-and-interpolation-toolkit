@@ -183,7 +183,7 @@ class PolynomialRegressionPage(ttk.Frame):
 
     def error(self):
         self.result_canvas.delete("all")
-        self.result_canvas.create_text(10, 10, anchor="nw", text="Invalid input. Please check your input values.", width=400, foregournd="lightcoral")
+        self.result_canvas.create_text(10, 10, anchor="nw", text="Invalid input. Please check your input values.", width=400, fill="lightcoral")
 
  
 

@@ -40,7 +40,7 @@ class SimplexIteration(ScrolledFrame):
         generate_iteration_button = ttk.Button(self.functions_frame, text="Generate Iteration", bootstyle="light-outline", command=lambda: self.generate_simplex_iteration())
         generate_iteration_button.pack(side="left", anchor="w", padx=5)
 
-        self.iteration_count_spinbox = ttk.Spinbox(self.functions_frame, from_=1, to=len(self.simplex_iteration), style="secondary.TSpinbox")
+        self.iteration_count_spinbox = ttk.Spinbox(self.functions_frame, from_=0, to=len(self.simplex_iteration)-1, style="secondary.TSpinbox")
         self.iteration_count_spinbox.pack(side="left", anchor="w", padx=5)
 
         self.success_promt = ttk.Label(self, text="")
@@ -54,7 +54,7 @@ class SimplexIteration(ScrolledFrame):
             return
 
         try:
-            iteration_count = int(self.iteration_count_spinbox.get()) - 1
+            iteration_count = int(self.iteration_count_spinbox.get())
         except:
             self.success_promt.config(text="Invalid iteration count", bootstyle="danger")
             return
