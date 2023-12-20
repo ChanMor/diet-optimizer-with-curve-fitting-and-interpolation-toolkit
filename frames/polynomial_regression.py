@@ -159,7 +159,9 @@ class PolynomialRegressionPage(ttk.Frame):
     def calculate_polynomial(self):
         try:
             degree = int(self.degree_entry.get())
-
+            if degree % 1 != 0:
+                self.error()
+                return
 
             if self.file_y.get() == "CSV file successfully uploaded":
                 data = self.load_csv_data()
@@ -171,9 +173,7 @@ class PolynomialRegressionPage(ttk.Frame):
                 return
 
             estimate_data = float(self.estimate_entry.get())
-            if estimate_data % 1 != 0:
-                self.error()
-                return
+
 
             if degree > len(data[0]) - 1 or degree < 1:
                 self.error()

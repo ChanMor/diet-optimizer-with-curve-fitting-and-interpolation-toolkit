@@ -58,6 +58,10 @@ class SimplexIteration(ttk.Frame):
             self.success_promt.config(text="Invalid iteration count", bootstyle="danger")
             return
 
+        if int(self.iteration_count_spinbox.get()) > len(self.simplex_iteration)-1:
+            self.success_promt.config(text="Invalid iteration count", bootstyle="danger")
+            return
+
         if self.matrix_display is not None:
             self.matrix_display.destroy()
 
