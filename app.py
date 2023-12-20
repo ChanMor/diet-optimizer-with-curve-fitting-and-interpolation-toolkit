@@ -24,12 +24,12 @@ class App:
         self.generate_polynomial_regression_content()
         self.generate_quadratic_spline_interpolation_content()
 
-        self.diet_solver_frame = DietOptimizerPage(self.root, self.send_to, self.main_frame)
+        self.diet_optimizer_frame = DietOptimizerPage(self.root, self.send_to, self.main_frame)
         self.polynomial_regression_frame = PolynomialRegressionPage(self.root, self.send_to, self.main_frame)
         self.quadratic_spline_interpolation_frame = QuadraticSplineInterpolationPage(self.root, self.send_to, self.main_frame)
 
         self.frames.append(self.main_frame)
-        self.frames.append(self.diet_solver_frame)
+        self.frames.append(self.diet_optimizer_frame)
         self.frames.append(self.polynomial_regression_frame)
         self.frames.append(self.quadratic_spline_interpolation_frame)
         
@@ -51,7 +51,7 @@ class App:
     def generate_diet_solver_content(self):
         self.diet_solver_content_frame = ttk.Frame(self.main_frame)
 
-        diet_solver_button = ttk.Button(self.diet_solver_content_frame, text=diet_solver_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.diet_solver_frame))
+        diet_solver_button = ttk.Button(self.diet_solver_content_frame, text=diet_solver_button_text, bootstyle="outline.light", command=lambda: self.send_to(self.diet_optimizer_frame))
         diet_solver_button.pack(side="top", anchor="w", pady=10)
 
         diet_solver_description_label = ttk.Label(self.diet_solver_content_frame, text=diet_solver_description, font=("Bahnschrift Light", 11), wraplength=800, justify="left")

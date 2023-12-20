@@ -122,14 +122,18 @@ class QuadraticSplineInterpolationPage(ttk.Frame):
 
     def load_csv_data(self):
         try:
+
             x_values = []
             y_values = []
             with open(self.file.get(), "r") as file:
                 lines = file.read().strip().split('\n')
-                for line in lines:
-                    x_values.append([float(value) for value in line.split(",")][0])
-                    y_values.append([float(value) for value in line.split(",")][1])
-                return [x_values, y_values]
+                data = [list(map(float, line.split(","))) for line in lines]
+                
+                data.sort(key=lambda pair: pair[0])
+                x_values, y_values = zip(*data)
+
+            return [list(x_values), list(y_values)]
+        
         except Exception as e:
             raise ValueError(f"Error loading data from CSV file: {e}")
 
@@ -156,6 +160,10 @@ class QuadraticSplineInterpolationPage(ttk.Frame):
             else: 
                 data = self.load_entry_data()
 
+            if len(data[0]) != len(data[1]):
+                self.error()
+                return
+
             estimate_data = float(self.estimate_entry.get())
 
             if estimate_data > data[0][-1] or estimate_data < data[0][0]:
@@ -180,6 +188,7 @@ class QuadraticSplineInterpolationPage(ttk.Frame):
             self.result_canvas.create_text(10, y_coordinate, anchor="nw", text=f"Estimate at {estimate_data}:\n {format(estimate_result, ".4f")}", width=400, fill="lightgrey")
 
         except ValueError:
+            print("wtf")
             self.error()
             
     def error(self):

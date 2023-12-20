@@ -32,4 +32,3 @@ with open('food_data.csv', newline='') as csvfile:
         food_cost[food_name] = unit_cost
         food_serving[food_name] = serving_unit_string
         food_data[food_name] = food_nutrient
-

@@ -166,9 +166,13 @@ class PolynomialRegressionPage(ttk.Frame):
             else: 
                 data = self.load_entry_data()
 
+            if len(data[0]) != len(data[1]):
+                self.error()
+                return
+
             estimate_data = float(self.estimate_entry.get())
 
-            if degree > len(data[0]) - 1:
+            if degree > len(data[0]) - 1 or degree < 1:
                 self.error()
                 return
 

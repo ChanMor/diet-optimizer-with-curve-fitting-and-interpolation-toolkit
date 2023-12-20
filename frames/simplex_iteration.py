@@ -60,8 +60,12 @@ class SimplexIteration(ttk.Frame):
 
         if self.matrix_display is not None:
             self.matrix_display.destroy()
-            
-        self.matrix_display = MatrixDisplay(self, self.simplex_iteration[iteration_count], self.selected_foods)
+
+        if iteration_count == len(self.simplex_iteration)-1:
+            self.matrix_display = MatrixDisplay(self, self.simplex_iteration[iteration_count], self.selected_foods, True)
+        else:
+            self.matrix_display = MatrixDisplay(self, self.simplex_iteration[iteration_count], self.selected_foods, False)
+
         self.matrix_display.pack(pady=10)
 
 
