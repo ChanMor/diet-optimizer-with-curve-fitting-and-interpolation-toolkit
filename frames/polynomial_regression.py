@@ -171,6 +171,9 @@ class PolynomialRegressionPage(ttk.Frame):
                 return
 
             estimate_data = float(self.estimate_entry.get())
+            if estimate_data % 1 != 0:
+                self.error()
+                return
 
             if degree > len(data[0]) - 1 or degree < 1:
                 self.error()
@@ -180,7 +183,7 @@ class PolynomialRegressionPage(ttk.Frame):
             estimate_result = estimate_polynomial_regression(degree, data, estimate_data)
             
             self.result_canvas.delete("all")
-            self.result_canvas.create_text(10, 10, anchor="nw", text=f"Polynomial Function:\n {result.replace("**", "^")}\n\nEstimate at {estimate_data}:\n {format(estimate_result, ".4f")}", width=400, fill="lightgrey")
+            self.result_canvas.create_text(10, 10, anchor="nw", text=f"Polynomial Function:\n {result.replace("**", "^")}\n\nEstimate at {estimate_data}:\n {round(estimate_result, 5)}", width=400, fill="lightgrey")
 
         except ValueError:
             self.error()

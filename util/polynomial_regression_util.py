@@ -1,23 +1,26 @@
 import numpy as np
 
 def gauss_jordan_method(matrix):
-    n = len(matrix)
-    for i in range(n):
-        if i != n - 1:
-            pivot_position = np.argmax(np.abs(matrix[i:, i])) + i
-            pivot_row = matrix[pivot_position, :]
+
+    num_of_row = matrix.shape[0]
+    for i in range(num_of_row):
+        if i != num_of_row - 1:
+            pivot_row_index = np.argmax(np.abs(matrix[i:, i])) + i
+            pivot_row = np.copy(matrix[pivot_row_index, :])
+            
             if pivot_row[i] == 0:
                 return None
-            matrix[i, :], matrix[pivot_position, :] = matrix[pivot_position, :], matrix[i, :].copy()
 
+            prev_pivot_row = matrix[i, :].copy()
+            matrix[i, :] = pivot_row
+            matrix[pivot_row_index, :] = prev_pivot_row
+    
         matrix[i, :] /= matrix[i, i]
-        for j in range(n):
-            if i == j:
-                continue
-            normalized_row = matrix[j, i] * matrix[i, :]
-            matrix[j, :] -= normalized_row
+        for j in range(num_of_row):
+            if i != j:   
+                matrix[j, :] -= matrix[j, i] * matrix[i, :]
 
-    return matrix[:, -1]
+    return matrix[:,-1]
 
 def get_rhs(degree, datapoints):
     x = np.array(datapoints[0]) 
@@ -61,16 +64,19 @@ def get_function_coefficients(degree, datapoints):
 def get_polynomial_regression_function(degree, datapoints):
     result = get_function_coefficients(degree, datapoints)
 
-    formated_function_body = str(format(result[0], ".4f"))
+    formated_function_body = ""
+    if result[0] != 0:
+        formated_function_body += str(round(result[0], 4))
+
     function_body = str(result[0])
     for i, coeff in enumerate(result[1:], start=1):
         function_body += f" + {str(coeff)}*x**{i}"
-        formated_function_body += f" + {str(format(coeff, ".4f"))}*x**{i}"
+        if coeff > 0.00001 or coeff < -0.00001:
+            formated_function_body += f" + {str(round(coeff, 5))}*x**{i}"
     
     return function_body,  formated_function_body
 
 def estimate_polynomial_regression(degree, datapoints, data):
     function_body = get_polynomial_regression_function(degree, datapoints)[0]
-
     polynomial_function = lambda x: eval(function_body)
     return polynomial_function(data)
