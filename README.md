@@ -21,7 +21,7 @@ Polynomial regression is a statistical method used to model the relationship bet
 
 ## Quadratic Spline Interpolation
 
-Polynomial regression is a statistical method used to model the relationship between a dependent variable and one or more independent variables. This calculator employs polynomial regression to generate precise polynomial equations based on user-provided data points. Users can input their datasets and specify the desired polynomial degree, allowing the calculator to determine the optimal polynomial equation that best fits the given data. This tool is invaluable for tasks where a more complex relationship between variables needs to be captured, offering a higher degree of accuracy in modeling. Quadratic spline interpolation is particularly useful when dealing with real-world data that may exhibit non-linear patterns within specific ranges.
+The quadratic spline interpolation calculator employs quadratic functions to interpolate data points seamlessly within a given range. By utilizing quadratic polynomials for each interval, the calculator ensures both continuity and differentiability at the connection points, facilitating precise curve fitting for the provided dataset. This method optimally captures the underlying trends in the data, offering an accurate representation of the relationship between variables. The result is a smooth, continuous curve that accurately reflects the nuances of the dataset. Quadratic spline interpolation is particularly useful when dealing with real-world data that may exhibit non-linear patterns within specific ranges.
 
 ## Intalling External Modules
 

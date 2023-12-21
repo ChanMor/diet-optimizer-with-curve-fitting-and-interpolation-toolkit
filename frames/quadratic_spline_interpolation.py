@@ -125,10 +125,11 @@ class QuadraticSplineInterpolationPage(ttk.Frame):
 
             x_values = []
             y_values = []
+            
             with open(self.file.get(), "r") as file:
                 lines = file.read().strip().split('\n')
                 data = [list(map(float, line.split(","))) for line in lines]
-                
+
                 data.sort(key=lambda pair: pair[0])
                 x_values, y_values = zip(*data)
 
