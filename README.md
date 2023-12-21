@@ -1,7 +1,7 @@
-# Diet Optimizer with Curve Fitting and Interpolation Toolkit
+# Optimization, Curve Fitting and Interpolation
 
 An app that has a diet solver as its main features and generic solver as its additional feature. 
-The diet solver involves the use of Simplex Method in minimization with mixed constraints. 
+The diet solver involves the use of Simplex Method set up as a dual problem for minimization. 
 The generic solver on the other hand, has a feature to generate a polynomial regression function based on given data points
 and another feature that involves quadratic spline interpolation.
 
