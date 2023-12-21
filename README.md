@@ -5,7 +5,7 @@ The diet solver involves the use of Simplex Method set up as a dual problem for 
 The generic solver on the other hand, has a feature to generate a polynomial regression function based on given data points
 and another feature that involves quadratic spline interpolation.
 
-## Diet Solver
+## Diet Optimization
 
 The objective of this feature is to identify the most cost-effective and nutritious combination of foods that will fulfill all daily nutritional requirements.
 The combination of foods will be based upon the food options selected by the user.
