@@ -1,4 +1,4 @@
-# CMSC 150 PYTHON PROJECT
+# Diet Optimizer with Curve Fitting and Interpolation Toolkit
 
 An app that has a diet solver as its main features and generic solver as its additional feature. 
 The diet solver involves the use of Simplex Method in minimization with mixed constraints. 
